@@ -2,23 +2,6 @@
 
 @section('content') 
 
-
-    <meta name="robots" content="index, follow">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -70,17 +53,6 @@
                             </select>
                         </div>
 
-                        
-<div class="form-group">
-  <label for="demo_overview">Select one or more countries</label>
-    <select name="input[]" class="form-control" required multiple>
-      <option value="m">Mustard</option>
-    <option value="k">Ketchup</option>
-    <option value="r">Relish</option>
-  </select>
-</div>
-
-
                         <div class="form-group">
                             <label class="col-form-label">Dealer</label>
                             <select class="form-control dealer-select" name="dealer_id" required>
@@ -115,7 +87,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label"> Brand</label>
-                            <select class="select-multiple" class="form-control" name="brand[]" required multiple>
+                            <select class="select-multiple form-control" name="brand[]" required multiple>
                                 <option value="">Please Select Brand </option>
                                 <option class="power-brand" value="Power Cement">Power Cement</option>
                                 <option class="power-brand" value="Black Bull">Black Bull</option>
@@ -188,6 +160,7 @@ $('.company-select').on('change',function(){
            $('.lucky-brand').hide()
         }
 
+})
 
 $('.destination').tagsinput({
   confirmKeys: [13, 44],
@@ -201,9 +174,6 @@ $(function () {
 });
 
 
-
-
-})
 
 
 
