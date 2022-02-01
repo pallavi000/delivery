@@ -25,7 +25,7 @@
                         <?php echo $message; ?>
                     </div>
                     @endif
-                    <div class="table-resopnsive">
+                    <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>

@@ -25,7 +25,7 @@
                         <?php echo $message; ?>
                     </div>
                     @endif
-                    <div class="table-resopnsive">
+                    <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -35,6 +35,7 @@
                                      <th>Type</th>
                                     <th>Body Type</th>
                                     <th>Company</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

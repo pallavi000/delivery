@@ -10,9 +10,9 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
    
-
-
     
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
     integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
@@ -74,7 +74,7 @@
                                                     <label for="exampleFormControlSelect1">Daily Order</label>
                                                     <select class="form-control select-multiple dailyorder" data-role="select-dropdown" name="daily_order_id[]"  multiple required>
                                                         @foreach($dailyOrders as $daily)
-                                                        <option weight="{{$daily->quantity}}" company_id="{{$daily->company->id}}" company_name="{{$daily->company->name}}" value="{{$daily->id}}">{{$daily->id}}</option>
+                                                        <option weight="{{$daily->quantity}}" company_id="{{$daily->company->id}}" company_name="{{$daily->company->name}}" destination="{{$daily->destination}}" value="{{$daily->id}}">{{$daily->id}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -84,7 +84,7 @@
                                                     <select class="form-control select-multiple deliveryorder" data-role="select-dropdown" name="delivery_order_id[]" multiple required>
                                                         @foreach($deliveryOrders as $delivery)
                                                         <option weight="{{$delivery->quantity}}" company_id="{{$delivery->company->id}}"
-                                                            company_name="{{$delivery->company->name}}" value="{{$delivery->id}}">{{$delivery->do_number}}</option>
+                                                            company_name="{{$delivery->company->name}}"  value="{{$delivery->id}}">{{$delivery->do_number}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -119,17 +119,18 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleFormControlSelect1">Company</label>
-                                                    <select class="form-control company-select select-multiple" name="company_id[]" multiple required></select>
+                                                    <div class="company-select-div"></div>
                                                 </div>
 
                                                  <div class="form-group">
                                                     <label for="exampleFormControlSelect1">Destination</label>
-                                                    <select class="form-control destination-select multiselect" name="destination[]"></select>
+                                                    <div class="destination-select-div"></div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="exampleFormControlSelect1">Vehicle</label>
-                                                    <select class="form-control " name="vehicle_id">
+                                                    <select class="form-control vehicle-select" name="vehicle_id">
+                                                        <option value="">Select A Vehicle</option>
                                                         @foreach($vehicles  as $vehicle)
                                                         <option value="{{$vehicle->id}}">{{$vehicle->vehicle_no}}</option>
                                                         @endforeach
@@ -138,7 +139,8 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleFormControlSelect1">Driver</label>
-                                                    <select class="form-control " name="driver_id">
+                                                    <select class="form-control driver-select" name="driver_id">
+                                                        <option value="">Select A Driver</option>
                                                         @foreach($drivers  as $driver)
                                                         <option value="{{$driver->id}}">{{$driver->name}}</option>
                                                         @endforeach
@@ -247,11 +249,17 @@
             return false;
         })
 
-   $(function () {
-        $('.select-multiple').selectpicker();
-    });
-
-
+        $(function () {
+            $('.select-multiple').selectpicker();
+        });
+        $('.vehicle-select').select2({
+            width: '100%',
+            placeholder: "Select A Vehicle"
+        });
+        $('.driver-select').select2({
+             width: '100%',
+             placeholder: "Select A Driver"
+        });
 
     });
 
@@ -260,13 +268,20 @@
     $('.dailyorder').on('change',function(){
         var ids = $(this).val()
         daily_order_weight = 0
-        var div =''
+        
+        var company_div ='<select class="form-control select-multiple" name="company_id[]" multiple required>'
+        var destination_div = `<select class="form-control select-multiple" name="destination[]" multiple required>`
         ids.map(id=>{
             var option = $(`.dailyorder option[value=${id}]`)
             var attr = $(option).attr('weight')
             var company_name=$(option).attr('company_name')
             var company_id=$(option).attr('company_id')
-            div += `<option value=${company_id} selected>${company_name}</option>`
+            company_div += `<option value=${company_id} selected>${company_name}</option>`
+            var destinations = $(option).attr('destination')
+            destinations = JSON.parse(destinations)
+            destinations.map(destination=>{
+                destination_div += `<option value=${destination} selected>${destination}</option>`
+            })
             attr = JSON.parse(attr)
             attr.map(weight=>{
                 var arr= weight.split('-')
@@ -275,12 +290,17 @@
             })
             
         })
+        company_div += '</select>'
+        destination_div += '</select>'
 
-        $('select[name="company_id[]"]').html(div)
+        $('.company-select-div').html(company_div)
+        $('.destination-select-div').html(destination_div)
+        
 
         $('input[name="daily_order_weight"]').val(daily_order_weight)
         total_weight = daily_order_weight+delivery_order_weight
         $('input[name="total_weight"]').val(total_weight)
+        $('.select-multiple').selectpicker()
     })
 
     $('.deliveryorder').on('change',function(){
