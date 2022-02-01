@@ -66,7 +66,7 @@ class DeliveryOrderController extends Controller
             'noofbags'=> $request->quantity*20,
             'zone'=> $request->zone,
             'expire_date'=> $request->expire_date,
-            'status'=>'pending',
+            'status'=>'open',
         ]);
 
      return redirect()->back()->with(['success' => 'Delivery Order created successfully!!']);

@@ -45,8 +45,6 @@ class DailyOrderController extends Controller
     {
          $this->validate($request,[
             'company_id'=>'required',
-            'date'=> 'required',
-            'order_number'=> 'required',
             'item_type'=>'required',
             'destination'=> 'required',
             'quantity'=> 'required',
@@ -59,11 +57,26 @@ class DailyOrderController extends Controller
 
             $destination = explode(',',$request->destination);
            
+               $error = false;
+
+                foreach($request->quantity as $quantity){
+                    $arr = explode('-', $quantity);
+                    if(is_int(intval($arr[1]))){
+                        
+                    } else {
+                        $error = true;
+                    }
+                }
+
+              
+                if($error){
+                    return redirect()->back()->with(['error'=>'Quantity is not valid.']);
+                }
 
         $dailyOrder= DailyOrder::create([
             'company_id'=>$request->company_id,
-            'date'=> $request->date,
-            'order_number'=> $request->order_number,
+            'date'=> Date('Y-m-d H:i:s'),
+            'order_number'=> 1,
             'item_type'=>json_encode($request->item_type),
             'destination'=>json_encode($destination),
             'quantity'=>json_encode($request->quantity),
@@ -73,6 +86,9 @@ class DailyOrderController extends Controller
             'additional_charges'=> $request->additional_charges,  
             'status'=>$request->status
         ]);
+
+        $dailyOrder->order_number = $dailyOrder->id;
+        $dailyOrder->save();
 
 
      return redirect()->back()->with(['success' => 'DeliveryOrder updated successfully!!']);
@@ -102,7 +118,7 @@ class DailyOrderController extends Controller
     {
          $companies = Company::all();
         $dealers = Dealer::all();
-        return view('dailyOrder.create',compact('companies','dealers','dailyOrder'));
+        return view('dailyOrder.edit',compact('companies','dealers','dailyOrder'));
     }
 
     /**
@@ -116,8 +132,6 @@ class DailyOrderController extends Controller
     {
          $this->validate($request,[
             'company_id'=>'required',
-            'date'=> 'required',
-            'order_number'=> 'required',
             'item_type'=>'required',
             'destination'=> 'required',
             'quantity'=> 'required',
@@ -127,12 +141,26 @@ class DailyOrderController extends Controller
             'additional_charges'=> 'required',  
             'status'=>'required'
         ]);
+
+                $error = false;
+                foreach($request->quantity as $quantity){
+                    $arr = explode('-', $quantity);
+                    if(is_int(intval($arr[1]))){
+                        
+                    } else {
+                        $error = true;
+                    }
+                }
+                if($error){
+                    return redirect()->back()->with(['error'=>'Quantity is not valid.']);
+                }
+
+
+
          $destination = explode(',',$request->destination);
 
  
             $dailyOrder->company_id =$request->company_id;
-            $dailyOrder->date = $request->date;
-            $dailyOrder->order_number= $request->order_number;
             $dailyOrder->item_type=json_encode($request->item_type);
             $dailyOrder->destination=json_encode($destination);
             $dailyOrder->quantity=json_encode($request->quantity);

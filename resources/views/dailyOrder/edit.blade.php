@@ -3,22 +3,7 @@
 @section('content') 
 
 
-    <meta name="robots" content="index, follow">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -58,7 +43,7 @@
                     @endif
 
 
-                    <form method="POST" action="{{route('daily-order.update')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('daily-order.update',$dailyOrder->id)}}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -79,7 +64,7 @@
                                 <option value="">Please Select Dealer</option>
                                 @foreach($dealers as $dealer)
                                
-                                  <option class="{{strtolower($dealer->company->name)}}-option" @if($dailyOrder->dealer_id==$dealer_id)selected @endif value="{{$dealer->id}}">{{$dealer->name}}</option>
+                                  <option class="{{strtolower($dealer->company->name)}}-option" @if($dailyOrder->dealer_id==$dealer->id)selected @endif value="{{$dealer->id}}">{{$dealer->name}}</option>
                               
                                 @endforeach
                             </select>
@@ -87,18 +72,19 @@
 
                          <div class="form-group">
                             <label class="col-form-label">Destination</label>
-                           <input type="text"   class="form-control destination " value="{{$dailyOrder->destination}}"  data-role="tagsinput" name="destination" required />
+                           <input type="text" value="{{implode(',', json_decode($dailyOrder->destination))}}"  class="form-control destination "   data-role="tagsinput" name="destination" required />
                         </div>
 
-
+                     
 
                         <div class="form-group">
+
                             <label class="col-form-label"> Item Type</label>
                             <select class=" select-multiple  form-control"  data-role="select-dropdown"  name="item_type[]" required multiple>
                                 <option value="">Please Select Type </option>
-                                <option value="opc" >OPC</option>
-                                <option value="src">SRC</option>
-                                 <option value="composite">Composite</option>
+                                <option value="opc" @if(in_array('opc',json_decode($dailyOrder->item_type)))selected @endif>OPC</option>
+                                <option value="src" @if(in_array('src',json_decode($dailyOrder->item_type)))selected @endif >SRC</option>
+                                 <option value="composite" @if(in_array('composite',json_decode($dailyOrder->item_type)))selected @endif >Composite</option>
                             
                             </select>
                         </div>
@@ -107,36 +93,28 @@
 
                         <div class="form-group">
                             <label class="col-form-label"> Brand</label>
-                            <select class="select-multiple" class="form-control" name="brand[]" required multiple>
+                            <select class="select-multiple brand-select form-control" name="brand[]" required multiple>
                                 <option value="">Please Select Brand </option>
-                                <option class="power-brand" value="Power Cement">Power Cement</option>
-                                <option class="power-brand" value="Black Bull">Black Bull</option>
-                                 <option class="power-brand" value="Qila">Qila</option>
+                                <option class="power-brand" value="Power Cement" @if(in_array('Power Cement',json_decode($dailyOrder->brand))) selected @endif>Power Cement</option>
+                                <option class="power-brand" value="Black Bull" @if(in_array('Black Bull',json_decode($dailyOrder->brand))) selected @endif>Black Bull</option>
+                                 <option class="power-brand" value="Qila" @if(in_array('Qila',json_decode($dailyOrder->brand))) selected @endif>Qila</option>
 
-                                  <option class="lucky-brand" value="Lucky OPC">Lucky OPC</option>
-                                   <option class="lucky-brand" value="Lucky SRC">Lucky SRC</option>
-                                    <option class="lucky-brand" value="Lucky Raj">Lucky Raj</option>
+                                  <option class="lucky-brand" value="Lucky OPC" @if(in_array('Lucky OPC',json_decode($dailyOrder->brand))) selected @endif>Lucky OPC</option>
+                                   <option class="lucky-brand" value="Lucky SRC" @if(in_array('Lucky SRC',json_decode($dailyOrder->brand))) selected @endif>Lucky SRC</option>
+                                    <option class="lucky-brand" value="Lucky Raj" @if(in_array('Lucky Raj',json_decode($dailyOrder->brand))) selected @endif>Lucky Raj</option>
                             
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label">Quantity</label>
-                            <select class="form-control quantity-select"  name="quantity" required>
-                                <option value="">Please Select Quantity </option>
-                                <option value="1" @if($dailyOrder->quantity=="1") selected @endif>1</option>
-                                <option value="2" @if($dailyOrder->quantity=="2")selected @endif>2</option>
-                                 <option value="3" @if($dailyOrder->quantity=="3")selected @endif>3</option>
-                                 <option value="5"@if($dailyOrder->quantity=="5")selected @endif>5</option>
-                                 <option value="5.5" @if($dailyOrder->quantity=="5.5")selected @endif>5.5</option>
-                                 <option value="10" @if($dailyOrder->quantity=="10")selected @endif>10</option>
-                                 <option value="11" @if($dailyOrder->quantity=="11")selected @endif>11</option>
-                                 <option value="15" @if($dailyOrder->quantity=="15")selected @endif>15</option>
-                                 <option value="20" @if($dailyOrder->quantity=="20")selected @endif>20</option>
-                                 <option value="30" @if($dailyOrder->quantity=="30")selected @endif>30</option>
-                            
-                            </select>
+                            <div class="brand-quantity">
+                                <label class="col-form-label">Quantity</label>
+                                @foreach(json_decode($dailyOrder->quantity) as $quantity)
+                                <input type="text" class="form-control mb-3" name="quantity[]" value="{{$quantity}}"/>
+                                @endforeach
+                            </div>
                         </div>
+
                          <div class="form-group">
                             <label class="col-form-label">Rate Per Ton</label>
                            <input type="text"  class="form-control noofbags" value="{{$dailyOrder->rate_per_ton}}" name="rate_per_ton" required />
@@ -148,9 +126,9 @@
 
                         <div class="form-group">
                             <label class="col-form-label"> Status</label>
-                            <select class="form-control" name="item_type" required>
+                            <select class="form-control" name="status" required>
                                 <option value="">Please Select Status </option>
-                                <option value="pending" selected>Pending</option>
+                                <option value="pending" @if($dailyOrder->status =="pending")selected @endif>Pending</option>
                                 <option value="delivered"@if($dailyOrder->status =="delivered")selected @endif >Delivered</option>
                                  <option value="cancelled" @if($dailyOrder->status =="cancelled")selected @endif>Cancelled</option>
                             
@@ -167,6 +145,21 @@
 
 
 <script>
+
+$(document).ready(function(){
+   var name = $('.company-select  option:selected').attr('comp').toLowerCase()
+        $('.dealer-select option').hide()
+        $('.'+name+'-option').show();
+
+        if(name=="lucky"){
+           $('.power-brand').hide()
+           $('.lucky-brand').show()
+        }else{
+        $('.power-brand').show()
+           $('.lucky-brand').hide()
+        } 
+})
+
 $('.company-select').on('change',function(){
     var name = $('.company-select  option:selected').attr('comp').toLowerCase()
         $('.dealer-select option').hide()
@@ -180,6 +173,13 @@ $('.company-select').on('change',function(){
            $('.lucky-brand').hide()
         }
 
+        
+$(function () {
+    $('.select-multiple').selectpicker();
+    
+});
+
+})
 
 $('.destination').tagsinput({
   confirmKeys: [13, 44],
@@ -192,10 +192,18 @@ $(function () {
     
 });
 
-
-
-
+$('.brand-select').on('change',function(){
+   var name = $(this).val()
+   var div ='<label class="col-form-label">Quantity</label>'
+    name.forEach(brand => {
+        div +=  `<input type="text"  class="form-control mb-3" name="quantity[]"  value='${brand} - ' required />`
+    });
+    $('.brand-quantity').html(div)
 })
+
+
+
+
 
 
 

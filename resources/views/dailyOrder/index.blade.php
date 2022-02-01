@@ -29,7 +29,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Order No</th>
                                     <th>Date</th>
                                     <th>Company</th>
                                     <th>Dealer</th>
@@ -46,14 +46,31 @@
                             <tbody>
                                 @foreach($dailyOrders as $dailyOrder)
                                 <tr>
-                                    <td>{{$dailyOrder->id}}</td>
+                                    <td>{{$dailyOrder->order_number}}</td>
                                      <td>{{$dailyOrder->date}}</td>
-                                      <td>{{$dailyOrder->order_number}}</td>
                                     <td>{{$dailyOrder->company->name}}</td>
-                                    <td>{{$dailyOrder->destination}}</td>
-                                    <td>{{$dailyOrder->item_type}}</td>
-                                    <td>{{$dailyOrder->brand}}</td>
-                                    <td>{{$dailyOrder->quantity}}</td>
+                                    <td class="text-nowrap">{{$dailyOrder->dealer->name}}</td>
+                                    <td><ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($dailyOrder->destination ) as $key => $destination)
+                                            <li> {{$destination}}</li>
+                                        @endforeach
+                                    </ul> 
+                                    </td>
+                                    <td><ul  class="ml-3 text-nowrap ">
+                                        @foreach(json_decode($dailyOrder->item_type ) as $key => $item_type)
+                                            <li> {{$item_type}}</li>
+                                        @endforeach
+                                    </ul> </td>
+                                    <td><ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($dailyOrder->brand ) as $key => $brand)
+                                            <li> {{$brand}}</li>
+                                        @endforeach
+                                    </ul> </td>
+                                    <td><ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($dailyOrder->quantity ) as $key => $quantity)
+                                            <li> {{$quantity}}</li>
+                                        @endforeach
+                                    </ul></td>
                                     <td>{{$dailyOrder->rate_per_ton}}</td>
                                     <td>{{$dailyOrder->additional_charges}}</td>
                                     <td>{{$dailyOrder->status}}</td>

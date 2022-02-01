@@ -75,7 +75,6 @@
                         <div class="form-group">
                             <label class="col-form-label"> Item Type</label>
                             <select class=" select-multiple  form-control"  data-role="select-dropdown"  name="item_type[]" required multiple>
-                                <option value="">Please Select Type </option>
                                 <option value="opc">OPC</option>
                                 <option value="src">SRC</option>
                                  <option value="composite">Composite</option>
@@ -87,8 +86,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label"> Brand</label>
-                            <select class="select-multiple form-control" name="brand[]" required multiple>
-                                <option value="">Please Select Brand </option>
+                            <select class="select-multiple form-control brand-select" name="brand[]" required multiple>
                                 <option class="power-brand" value="Power Cement">Power Cement</option>
                                 <option class="power-brand" value="Black Bull">Black Bull</option>
                                  <option class="power-brand" value="Qila">Qila</option>
@@ -101,21 +99,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label">Quantity</label>
-                            <select class="form-control quantity-select"  name="quantity" required>
-                                <option value="">Please Select Quantity </option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                 <option value="3">3</option>
-                                 <option value="5">5</option>
-                                 <option value="5.5">5.5</option>
-                                 <option value="10">10</option>
-                                 <option value="11">11</option>
-                                 <option value="15">15</option>
-                                 <option value="20">20</option>
-                                 <option value="30">30</option>
-                            
-                            </select>
+                                <div class="brand-quantity">
+                                </div>
                         </div>
                          <div class="form-group">
                             <label class="col-form-label">Rate Per Ton</label>
@@ -128,7 +113,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label"> Status</label>
-                            <select class="form-control" name="item_type" required>
+                            <select class="form-control" name="status" required>
                                 <option value="">Please Select Status </option>
                                 <option value="pending" selected>Pending</option>
                                 <option value="delivered">Delivered</option>
@@ -148,17 +133,25 @@
 
 <script>
 $('.company-select').on('change',function(){
-    var name = $('.company-select  option:selected').attr('comp').toLowerCase()
-        $('.dealer-select option').hide()
-        $('.'+name+'-option').show();
+    
 
-        if(name=="lucky"){
-           $('.power-brand').hide()
-           $('.lucky-brand').show()
-        }else{
-        $('.power-brand').show()
-           $('.lucky-brand').hide()
-        }
+
+    var name = $('.company-select  option:selected').attr('comp').toLowerCase()
+    $('.dealer-select option').hide()
+    $('.'+name+'-option').show();
+
+    if(name=="lucky"){
+        $('.lucky-brand').show()
+        $('.power-brand').hide()
+        
+    }else{
+    $('.power-brand').show()
+        $('.lucky-brand').hide()
+    }
+
+    $(function () {
+        $('.select-multiple').selectpicker(); 
+    });
 
 })
 
@@ -170,8 +163,16 @@ $('.destination').tagsinput({
 
 $(function () {
     $('.select-multiple').selectpicker();
-    
 });
+
+$('.brand-select').on('change',function(){
+   var name = $(this).val()
+   var div ='<label class="col-form-label">Quantity</label>'
+    name.forEach(brand => {
+        div +=  `<input type="text"  class="form-control mb-3" name="quantity[]"  value='${brand} - ' required />`
+    });
+    $('.brand-quantity').html(div)
+})
 
 
 

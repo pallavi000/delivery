@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('dealer',App\Http\Controllers\DealerController::class);
     Route::resource('delivery-order',App\Http\Controllers\DeliveryOrderController::class);
     Route::resource('daily-order',App\Http\Controllers\DailyOrderController::class);
+    Route::resource('invoice',App\Http\Controllers\InvoiceController::class);
+
 
 
 
