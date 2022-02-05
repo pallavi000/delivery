@@ -2,16 +2,16 @@
 
 @section('content')
 
-<span class="text">Destination</span>
+<span class="text">Product</span>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Add New Destination</h4>
+                    <h4 class="card-title float-left">Add New Product</h4>
                     <div class="float-right">
-                        <a href="{{route('destination.index')}}" class="btn btn-primary">Go Back</a>
+                        <a href="{{route('product.index')}}" class="btn btn-primary">Go Back</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -36,43 +36,47 @@
                     @endif
 
 
-                    <form method="POST" action="{{route('destination.store')}}">
+                    <form method="POST" action="{{route('product.store')}}">
                         @csrf
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label class="col-form-label">Zone</label>
-                                    <input type="text" class="form-control" name="zone" required />
+                                    <label class="col-form-label">Company</label>
+                                    <select class="form-control" name="company_id" required>
+                                        <option value="">Please Select Company</option>
+                                        @foreach($companies as $company)
+                                        <option value="{{$company->id}}">{{$company->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col">
-                                    <label class="col-form-label">Area</label>
-                                    <input type="text" class="form-control" name="area" required />
+                                    <label class="col-form-label">Item Type</label>
+                                    <input type="text"
+                                        class="form-control" name="item_type" required />
                                 </div>
                                 <div class="col">
-                                    <label class="col-form-label">Address</label>
-                                    <input type="text" class="form-control" name="address" required />
+                                    <label class="col-form-label">Brand</label>
+                                    <input type="text"
+                                        class="form-control" name="brand" required />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label class="col-form-label">Destination Type</label>
-                                    <select class="form-control" name="destination_type" required>
-                                        <option value="">Please Select Destination Type</option>
-                                        <option value="shop">Shop</option>
-                                        <option value="warehouse">Warehouse</option>
-                                        <option value="project">Project</option>
-                                    </select>
+                                    <label class="col-form-label">Quantity</label>
+                                    <input type="number"
+                                        class="form-control" name="quantity" required />
                                 </div>
                                 <div class="col">
-                                    <label class="col-form-label">Location</label>
-                                    <input type="text" placeholder="https://goo.gl/maps/B566T7n5SHujqNhJ6"
-                                        class="form-control" name="location" required />
+                                    <label class="col-form-label">Package Type</label>
+                                    <input type="text" 
+                                        class="form-control" name="package_type" required />
                                 </div>
-
+                                <div class="col"></div>
                             </div>
                         </div>
+                        
                         <button class="btn btn-primary mt-3">Submit</button>
                     </form>
                 </div>

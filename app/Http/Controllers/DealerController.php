@@ -6,6 +6,8 @@ use App\Models\Dealer;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use  Illuminate\Support\Str;
+use App\Models\Bank;
+
 
 class DealerController extends Controller
 {
@@ -41,10 +43,13 @@ class DealerController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            'contact'=>'required',
+            'phone'=>'required',
             'email'=>'required',
+            'fax'=>'required',
+            'area'=>'required',
+            'zone'=>'required',
+            'contact_person'=>'required',
             'address'=>'required',
-            'picture'=>'required',
             'ntn'=>'required',
             'strn'=>'required',
             'company_id'=>'required',
@@ -52,22 +57,26 @@ class DealerController extends Controller
             'customer_number'=>'required',
         ]);
 
-        if($request->hasFile('picture')){
-             $file = $request->file('picture');
-            $path = time() . '-' . Str::random(6) . '.' . $file->extension();
-            $request->file('picture')->move(public_path('images'), $path);
-            $pictureUrl = '/images/'.$path;
-            $pictureName = $request->file('picture')->getClientOriginalName();
+        // if($request->hasFile('picture')){
+        //      $file = $request->file('picture');
+        //     $path = time() . '-' . Str::random(6) . '.' . $file->extension();
+        //     $request->file('picture')->move(public_path('images'), $path);
+        //     $pictureUrl = '/images/'.$path;
+        //     $pictureName = $request->file('picture')->getClientOriginalName();
             
-        }
+        // }
 
      
         $dealer= Dealer::create([
             'name'=>$request->name,
-            'contact'=>$request->contact,
+            'contact'=>$request->phone,
             'email'=>$request->email,
+            'fax' => $request->fax,
+            'area' => $request->area,
+            'zone' => $request->zone,
+            'contact_person' => $request->contact_person,
             'address'=>$request->address,
-            'picture'=>$pictureUrl,
+            'picture'=> ' ',
             'ntn'=>$request->ntn,
             'strn'=>$request->strn,
             'company_id'=>$request->company_id,
@@ -77,9 +86,19 @@ class DealerController extends Controller
             'sales_district'=>$request->sales_district,
             'customer_address'=>$request->customer_address,
             'customer_territory'=>$request->customer_territory
-
-          
         ]);
+
+        $titles = $request->title;
+        $account_nos = $request->account_no;
+        $banks = $request->bank;
+        for($i=0;$i<sizeof($titles);$i++){
+            Bank::create([
+            'title'=> $titles[$i],
+            'account_no'=>$account_nos[$i],
+            'bank' => $banks[$i],
+            'dealer_id'=>$dealer->id
+            ]); 
+        }
      
         return redirect()->back()->with(['success' => 'Dealer created successfully!!']);
     }
@@ -119,8 +138,12 @@ class DealerController extends Controller
     {
          $this->validate($request,[
             'name'=>'required',
-            'contact'=>'required',
+            'phone'=>'required',
             'email'=>'required',
+            'fax'=>'required',
+            'area'=>'required',
+            'zone'=>'required',
+            'contact_person'=>'required',
             'address'=>'required',
             'ntn'=>'required',
             'strn'=>'required',
@@ -129,30 +152,50 @@ class DealerController extends Controller
             'customer_number'=>'required',
         ]);
 
-        if($request->hasFile('picture')){
-             $file = $request->file('picture');
-            $path = time() . '-' . Str::random(6) . '.' . $file->extension();
-            $request->file('picture')->move(public_path('images'), $path);
-            $pictureUrl = '/images/'.$path;
-            $pictureName = $request->file('picture')->getClientOriginalName();
-            $dealer->picture=$pictureUrl;
+        // if($request->hasFile('picture')){
+        //      $file = $request->file('picture');
+        //     $path = time() . '-' . Str::random(6) . '.' . $file->extension();
+        //     $request->file('picture')->move(public_path('images'), $path);
+        //     $pictureUrl = '/images/'.$path;
+        //     $pictureName = $request->file('picture')->getClientOriginalName();
+        //     $dealer->picture=$pictureUrl;
               
-        }
+        // }
 
-            $dealer->name=$request->name;
-            $dealer->contact=$request->contact;
-            $dealer->email=$request->email;
-            $dealer->address=$request->address;
-            $dealer->ntn=$request->ntn;
-            $dealer->strn=$request->strn;
-            $dealer->company_id=$request->company_id;
-            $dealer->customer_name=$request->customer_name;
-            $dealer->customer_number=$request->customer_number;
-            $dealer->sales_group=$request->sales_group;
-            $dealer->sales_district=$request->sales_district;
-            $dealer->customer_address=$request->customer_address;
-            $dealer->customer_territory=$request->customer_territory;
-            $dealer->save();
+        $dealer->name=$request->name;
+        $dealer->contact=$request->phone;
+        $dealer->email=$request->email;
+        $dealer->area=$request->area;
+        $dealer->zone=$request->zone;
+        $dealer->fax=$request->fax;
+        $dealer->contact_person=$request->contact_person;
+        $dealer->address=$request->address;
+        $dealer->ntn=$request->ntn;
+        $dealer->strn=$request->strn;
+        $dealer->company_id=$request->company_id;
+        $dealer->customer_name=$request->customer_name;
+        $dealer->customer_number=$request->customer_number;
+        $dealer->sales_group=$request->sales_group;
+        $dealer->sales_district=$request->sales_district;
+        $dealer->customer_address=$request->customer_address;
+        $dealer->customer_territory=$request->customer_territory;
+        $dealer->save();
+        
+        $titles = $request->title;
+        $account_nos = $request->account_no;
+        $banks = $request->bank;
+
+        for($i=0;$i<sizeof($titles);$i++){
+            $bank= Bank::updateOrCreate([
+                'account_no' => $account_nos[$i],
+                'dealer_id' =>$dealer->id
+            ],[
+            'title'=> $titles[$i],
+            'account_no'=>$account_nos[$i],
+            'bank' => $banks[$i],
+            'dealer_id'=>$dealer->id
+            ]); 
+        }
      
         return redirect()->back()->with(['success' => 'Dealer updated successfully!!']);
     }

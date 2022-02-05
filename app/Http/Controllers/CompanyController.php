@@ -69,7 +69,7 @@ class CompanyController extends Controller
             $banks = $request->bank;
 
             for($i=0;$i<sizeof($titles);$i++){
-              $bank= Bank::create([
+              Bank::create([
                 'title'=> $titles[$i],
                 'account_no'=>$account_nos[$i],
                 'bank' => $banks[$i],
@@ -142,21 +142,21 @@ class CompanyController extends Controller
 
        
 
-         $titles = $request->title;
-            $account_nos = $request->account_no;
-            $banks = $request->bank;
+        $titles = $request->title;
+        $account_nos = $request->account_no;
+        $banks = $request->bank;
 
-            for($i=0;$i<sizeof($titles);$i++){
-              $bank= Bank::updateorCreate([
-                  'account_no' => $account_nos[$i],
-                  'company_id' =>$company->id
-              ],[
-                'title'=> $titles[$i],
-                'account_no'=>$account_nos[$i],
-                'bank' => $banks[$i],
-                'company_id'=>$company->id
-              ]); 
-            }
+        for($i=0;$i<sizeof($titles);$i++){
+            $bank= Bank::updateOrCreate([
+                'account_no' => $account_nos[$i],
+                'company_id' =>$company->id
+            ],[
+            'title'=> $titles[$i],
+            'account_no'=>$account_nos[$i],
+            'bank' => $banks[$i],
+            'company_id'=>$company->id
+            ]); 
+        }
 
         return redirect()->back()->with(['success' => 'Company updated successfully!!']);
     }

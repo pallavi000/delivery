@@ -12,22 +12,21 @@
     }
 </style>
 
-<span class="text">Vehicle</span>
+<span class="text">DLV</span>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Vehicle List</h4>
+                    <h4 class="card-title float-left">DLV List</h4>
                     <div class="float-right">
-                        <form class="multi-dlv-form" method="POST" action="{{route('dlv.multi.add')}}">
+                        <form class="multi-dlv-form" method="POST" action="{{route('dlv.multi.remove')}}">
                             @csrf
                             <input type="text" class="d-none multi-dlv-ids" name="vehicles" required />
                         </form>
-                        <button type="button" class="btn btn-primary multi-dlv-btn mr-2">Add to Daily Lineup</button>
-                        <a href="{{route('dlv.show')}}" class="btn btn-primary mr-2">Show DLV</a>
-                        <a href="{{route('vehicle.create')}}" class="btn btn-primary">Add Vehicle</a>
+                        <button type="button" class="btn btn-danger multi-dlv-btn">Remove from Daily Lineup</button>
+                        <a href="{{route('vehicle.index')}}" class="btn btn-primary">Add DLV</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -76,30 +75,20 @@
                                         @php
                                         for($i=0;$i<$vehicle->reliable;$i++) {
                                             echo "<i class='fa fa-star mr-1 star'></i>";
-                                            }
-                                            @endphp
+                                        }
+                                        @endphp
                                     </td>
                                     <td>
                                         @php
                                         for($i=0;$i<$vehicle->punctuality;$i++) {
                                             echo "<i class='fa fa-star mr-1 star'></i>";
-                                            }
-                                            @endphp
+                                        }
+                                        @endphp
                                     </td>
                                     <td class="d-flex">
-                                        <a href="{{route('vehicle.edit',$vehicle->id)}}"
-                                            class="btn btn-warning mr-2">Edit</a>
-                                        @if($vehicle->dlv == 0)
-                                        <form method="POST" action="{{route('dlv.add',$vehicle->id)}}">
+                                         <form method="POST" action="{{route('dlv.remove',$vehicle->id)}}">
                                             @csrf
-                                            <button class="btn btn-primary mr-2">Add to DLV</button>
-
-                                        </form>
-                                        @endif
-                                        <form method="POST" action="{{route('vehicle.destroy',$vehicle->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
+                                            <button class="btn btn-danger">Remove from DLV</button>
 
                                         </form>
                                     </td>

@@ -11,6 +11,8 @@
                 <div class="card-header">
                     <h4 class="card-title float-left">Daily Order List</h4>
                     <div class="float-right">
+                        <a href="{{route('vehicle.index')}}" class="btn btn-primary mr-2">Add DLV</a>
+                        <a href="{{route('dlv.show')}}" class="btn btn-primary mr-2">Show DLV</a>
                         <a href="{{route('daily-order.create')}}" class="btn btn-primary">Add Daily Order</a>
                     </div>
                 </div>

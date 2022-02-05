@@ -31,13 +31,12 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Contact</th>
+                                    <th>Phone</th>
                                     <th>Email</th>
-                                     <th>Address</th>
-                                     <th>NTN</th>
+                                    <th>Fax</th>
+                                    <th>Office Address</th>
+                                    <th>NTN</th>
                                     <th>STRN</th>
-                                    <th>Company</th>
-                                   <th>Picture</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -48,11 +47,10 @@
                                     <td>{{$dealer->name}}</td>
                                     <td>{{$dealer->contact}}</td>
                                     <td>{{$dealer->email}}</td>
+                                    <td>{{$dealer->fax}}</td>
                                     <td>{{$dealer->address}}</td>
                                     <td>{{$dealer->ntn}}</td>
                                     <td>{{$dealer->strn}}</td>
-                                    <td>{{$dealer->company->name}}</td>
-                                     <td><img src="{{$dealer->picture}}"  width="75" height="75" /></td>
                                    
 
                                     <td class="d-flex">

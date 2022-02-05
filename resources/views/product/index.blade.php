@@ -2,16 +2,16 @@
 
 @section('content')
 
-<span class="text">Company</span>
+<span class="text">Product</span>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Company List</h4>
+                    <h4 class="card-title float-left">Product List</h4>
                     <div class="float-right">
-                        <a href="{{route('company.create')}}" class="btn btn-primary">Add Company</a>
+                        <a href="{{route('product.create')}}" class="btn btn-primary">Add Product</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -30,24 +30,26 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Fax</th>
-                                    <th>Phone No</th>
+                                    <th>Company</th>
+                                    <th>Item Type</th>
+                                    <th>Brand</th>
+                                    <th>Quantity</th>
+                                    <th>Package Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($companies as $company)
+                                @foreach($products as $product)
                                 <tr>
-                                    <td>{{$company->id}}</td>
-                                    <td>{{$company->name}}</td>
-                                    <td>{{$company->email}}</td>
-                                    <td>{{$company->fax}}</td>
-                                    <td>{{$company->phone}}</td>
+                                    <td>{{$product->id}}</td>
+                                    <td>{{$product->company->name}}</td>
+                                    <td>{{$product->item_type}}</td>
+                                    <td>{{$product->brand}}</td>
+                                    <td>{{$product->quantity}}</td>
+                                    <td>{{$product->package_type}}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('company.edit',$company->id)}}" class="btn btn-warning mr-2">Edit</a>
-                                        <form method="POST" action="{{route('company.destroy',$company->id)}}">
+                                        <a href="{{route('product.edit',$product->id)}}" class="btn btn-warning mr-2">Edit</a>
+                                        <form method="POST" action="{{route('product.destroy',$product->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger">Delete</button>

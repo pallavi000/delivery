@@ -68,6 +68,7 @@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="{{route('daily-order.index')}}">Daily Orders</a></li>
                     <li><a href="{{route('invoice.index')}}">Invoice</a></li>
+                    <li><a href="{{route('dlv.show')}}">Daily Line-up Vehicles</a></li>
 
                 </ul>
             </li>
@@ -85,7 +86,9 @@
                     <li><a href="{{route('driver.index')}}">Drivers</a></li>
                     <li><a href="{{route('company.index')}}">Company</a></li>
                     <li><a href="{{route('dealer.index')}}">Dealer</a></li>
-                    <li><a href="{{route('area.index')}}">Area</a></li>
+                    <li><a href="{{route('destination.index')}}">Destination</a></li>
+                    <li><a href="{{route('receiver.index')}}">Receiver</a></li>
+                    <li><a href="{{route('product.index')}}">Product</a></li>
                 </ul>
             </li>
             <li>

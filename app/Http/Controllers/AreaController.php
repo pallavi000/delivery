@@ -37,15 +37,22 @@ class AreaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'area'=>'required',
+            'zone'=>'required',
+            'address'=>'required',
+            'destination_type'=>'required',
+            'location'=>'required',
         ]);
 
         $area = Area::create([
-            'name'=>$request->name
-
+            'area'=>$request->area,
+            'zone'=>$request->zone,
+            'address'=>$request->address,
+            'destination_type'=>$request->destination_type,
+            'location'=>$request->location,
         ]);
         if($area){
-            return redirect()->back()->with(['success' => 'Area created successfully!!']);
+            return redirect()->back()->with(['success' => 'Destination created successfully!!']);
         }else{
             return redirect()->back()->with(['error' => 'Internal server error']);
         }
@@ -69,9 +76,9 @@ class AreaController extends Controller
      * @param  \App\Models\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function edit(Area $area)
+    public function edit(Area $destination)
     {
-        return view('area.edit',compact('area'));
+        return view('area.edit',compact('destination'));
     }
 
     /**
@@ -81,15 +88,23 @@ class AreaController extends Controller
      * @param  \App\Models\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Area $area)
+    public function update(Request $request, Area $destination)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'area'=>'required',
+            'zone'=>'required',
+            'address'=>'required',
+            'destination_type'=>'required',
+            'location'=>'required',
         ]);
 
-        $area->name = $request->name;
-        $area->save();
-        return redirect()->back()->with(['success' => 'Area updated successfully!!']);
+        $destination->area = $request->area;
+        $destination->zone = $request->zone;
+        $destination->address = $request->address;
+        $destination->destination_type = $request->destination_type;
+        $destination->location = $request->location;
+        $destination->save();
+        return redirect()->back()->with(['success' => 'Destination updated successfully!!']);
     }
 
     /**
@@ -98,11 +113,11 @@ class AreaController extends Controller
      * @param  \App\Models\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Area $area)
+    public function destroy(Area $destination)
     {
-        if($area){
-            $area->delete();
-             return redirect()->back()->with(['success' => 'Area deleted successfully!!']);
+        if($destination){
+            $destination->delete();
+             return redirect()->back()->with(['success' => 'Destination deleted successfully!!']);
 
         }
     }

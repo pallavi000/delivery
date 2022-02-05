@@ -168,7 +168,6 @@ $('.company-select').on('change',function(){
 $('.destination').tagsinput({
   confirmKeys: [13, 44],
   trimValue: true
-
 });
 
 $(function () {

@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Office Location</label>
-                                    <input type="text" class="form-control" name="office_location" required />
+                                    <input type="text" placeholder="https://goo.gl/maps/B566T7n5SHujqNhJ6" class="form-control" name="office_location" required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Factory Address</label>
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Factory Location</label>
-                                    <input type="text" class="form-control" name="factory_location" required />
+                                    <input type="text" placeholder="https://goo.gl/maps/B566T7n5SHujqNhJ6" class="form-control" name="factory_location" required />
                                 </div>
                             </div>
                         </div>
@@ -93,8 +93,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group mt-5">
                             <label>Bank Details</label>
+                            <div class="float-right">
+                                <div class="btn btn-success addBank d-flex align-items-center"><i
+                                        class='bx bx-plus-medical'></i></div>
+                            </div>
                             <div class="row align-items-center">
                                 <div class="col">
                                     <label class="col-form-label">Title</label>
@@ -108,9 +112,10 @@
                                     <label class="col-form-label">Bank</label>
                                     <input type="text" class="form-control" name="bank[]" required />
                                 </div>
-                                <div class="col addBank"><i class="bx bx-plus-medical"></i></div>
+                                <div class="col"></div>
                             </div>
                         </div>
+
                         <div class="form-group newbank"></div>
 
 
@@ -139,7 +144,12 @@
                             <label class="col-form-label" >Bank</label>
                             <input type="text" class="form-control" name="bank[]" required/>
                                  </div>
-                             <div class="col removeBank"><i class="bx bxs-minus-circle"></i></div>
+                                 <div class="col removeBank">
+                                <label class="col-form-label"></label>
+                                <div class=" btn btn-danger d-block" style="width:fit-content">
+                                    <i class='bx bx-x'></i>
+                                </div>
+                            </div>
 
                             </div>
                                  </div>

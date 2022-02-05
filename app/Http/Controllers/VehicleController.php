@@ -43,16 +43,30 @@ class VehicleController extends Controller
             'registration_city'=>'required',
             'type'=>'required',
             'body_type'=>'required',
-            'company_id'=>'required'
+            'capacity' => 'required',
+            'intentions' => 'required',
+            'owner_name' => 'required',
+            'owner_number' => 'required',
+            'reliable' => 'required',
+            'punctuality' => 'required',
         ]);
+
+        if(strlen($request->owner_number)!=11) {
+            return redirect()->back()->with(['error'=> 'Owner Number should be of 11 digits only.']);
+        }
 
         $vehicle = Vehicle::create([
             'vehicle_no'=>$request->vehicle_no,
             'registration_city'=>$request->registration_city,
             'type'=>$request->type,
             'body_type'=>$request->body_type,
-            'company_id'=>$request->company_id
-
+            'company_id'=> 0,
+            'capacity' => $request->capacity,
+            'intentions' => json_encode($request->intentions),
+            'owner_name' => $request->owner_name,
+            'owner_number' => $request->owner_number,
+            'reliable' => $request->reliable,
+            'punctuality' => $request->punctuality
         ]);
         if($vehicle){
             return redirect()->back()->with(['success' => 'vehicle created successfully!!']);
@@ -93,19 +107,35 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
+        
          $this->validate($request,[
             'vehicle_no'=>'required',
             'registration_city'=>'required',
             'type'=>'required',
             'body_type'=>'required',
-            'company_id'=>'required'
+            'capacity' => 'required',
+            'intentions' => 'required',
+            'owner_name' => 'required',
+            'owner_number' => 'required',
+            'reliable' => 'required',
+            'punctuality' => 'required',
         ]);
+
+         if(strlen($request->owner_number)!=11) {
+            return redirect()->back()->with(['error'=> 'Owner Number should be of 11 digits only.']);
+        }
 
             $vehicle->vehicle_no=$request->vehicle_no;
             $vehicle->registration_city=$request->registration_city;
             $vehicle->type=$request->type;
             $vehicle->body_type=$request->body_type;
-            $vehicle->company_id=$request->company_id;
+
+            $vehicle->capacity = $request->capacity;
+            $vehicle->intentions = json_encode($request->intentions);
+            $vehicle->owner_name = $request->owner_name;
+            $vehicle->owner_number = $request->owner_number;
+            $vehicle->reliable = $request->reliable;
+            $vehicle->punctuality = $request->punctuality;
             $vehicle->save();
              return redirect()->back()->with(['success' => 'Vehicle updated successfully!!']);
     }
@@ -122,5 +152,36 @@ class VehicleController extends Controller
             $vehicle->delete();
              return redirect()->back()->with(['success' => 'Vehicle deleted successfully!!']);
         }
+    }
+
+    public function addToDLV($id, Request $request) {
+        Vehicle::where('id', $id)->update(['dlv'=> 1]);
+        return redirect()->back()->with(['success' => 'Vehicle added to Daily Lineup!!']);
+    }
+
+    public function addToDLVMulti(Request $request) {
+        $vehicles = explode(",", $request->vehicles);
+        foreach($vehicles as $vehicle_id) {
+            Vehicle::where('id', $vehicle_id)->update(['dlv'=> 1]);
+        }
+        return redirect()->back()->with(['success' => 'Selected Vehicles added to Daily Lineup!!']);
+    }
+
+    public function removeFromDLV($id, Request $request) {
+        Vehicle::where('id', $id)->update(['dlv'=> 0]);
+        return redirect()->back()->with(['success' => 'Vehicle removed from Daily Lineup!!']);   
+    }
+
+    public function removeFromDLVMulti(Request $request) {
+        $vehicles = explode(",", $request->vehicles);
+        foreach($vehicles as $vehicle_id) {
+            Vehicle::where('id', $vehicle_id)->update(['dlv'=> 0]);
+        }
+        return redirect()->back()->with(['success' => 'Selected Vehicles removed from Daily Lineup!!']);
+    }
+
+    public function showDLV() {
+        $vehicles = Vehicle::where('dlv', 1)->get();
+        return view('vehicle.DLV', compact('vehicles'));
     }
 }

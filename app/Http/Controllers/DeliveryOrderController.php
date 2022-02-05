@@ -51,23 +51,24 @@ class DeliveryOrderController extends Controller
             'noofbags'=> 'required',
             'zone'=> 'required',
             'expire_date'=> 'required',
-       
-            
         ]);
 
-        $deliveryOrder = DeliveryOrder::create([
-            'company_id'=>$request->company_id,
-            'do_number'=> $request->do_number,
-            'dealer_id'=> $request->dealer_id,
-            'item_type'=>$request->item_type,
-            'brand'=> $request->brand,
-            'quantity'=> $request->quantity,
-            'packing_type'=> $request->packing_type,
-            'noofbags'=> $request->quantity*20,
-            'zone'=> $request->zone,
-            'expire_date'=> $request->expire_date,
-            'status'=>'open',
-        ]);
+        $do_numbers = explode(",", $request->do_number);
+        foreach($do_numbers as $do_number) {
+            $deliveryOrder = DeliveryOrder::create([
+                'company_id'=>$request->company_id,
+                'do_number'=> $do_number,
+                'dealer_id'=> $request->dealer_id,
+                'item_type'=>$request->item_type,
+                'brand'=> $request->brand,
+                'quantity'=> $request->quantity,
+                'packing_type'=> $request->packing_type,
+                'noofbags'=> $request->quantity*20,
+                'zone'=> $request->zone,
+                'expire_date'=> $request->expire_date,
+                'status'=>'open',
+            ]);
+        }
 
      return redirect()->back()->with(['success' => 'Delivery Order created successfully!!']);
 

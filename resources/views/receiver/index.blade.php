@@ -2,16 +2,16 @@
 
 @section('content')
 
-<span class="text">Company</span>
+<span class="text">Receiver</span>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Company List</h4>
+                    <h4 class="card-title float-left">Receiver List</h4>
                     <div class="float-right">
-                        <a href="{{route('company.create')}}" class="btn btn-primary">Add Company</a>
+                        <a href="{{route('receiver.create')}}" class="btn btn-primary">Add Receiver</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -30,24 +30,28 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Dealer</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Fax</th>
-                                    <th>Phone No</th>
+                                    <th>Number</th>
+                                    <th>Zone</th>
+                                    <th>Area</th>
+                                    <th>Address</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($companies as $company)
+                                @foreach($receivers as $receiver)
                                 <tr>
-                                    <td>{{$company->id}}</td>
-                                    <td>{{$company->name}}</td>
-                                    <td>{{$company->email}}</td>
-                                    <td>{{$company->fax}}</td>
-                                    <td>{{$company->phone}}</td>
+                                    <td>{{$receiver->id}}</td>
+                                    <td>{{$receiver->dealer->name}}</td>
+                                    <td>{{$receiver->name}}</td>
+                                    <td>{{$receiver->number}}</td>
+                                    <td>{{$receiver->zone}}</td>
+                                    <td>{{$receiver->area}}</td>
+                                    <td>{{$receiver->address}}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('company.edit',$company->id)}}" class="btn btn-warning mr-2">Edit</a>
-                                        <form method="POST" action="{{route('company.destroy',$company->id)}}">
+                                        <a href="{{route('receiver.edit',$receiver->id)}}" class="btn btn-warning mr-2">Edit</a>
+                                        <form method="POST" action="{{route('receiver.destroy',$receiver->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger">Delete</button>

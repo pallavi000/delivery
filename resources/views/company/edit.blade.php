@@ -43,19 +43,23 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">Company Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{$company->name}}" required />
+                                    <input type="text" class="form-control" name="name" value="{{$company->name}}"
+                                        required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Email</label>
-                                    <input type="email" class="form-control" name="email" value="{{$company->email}}" required />
+                                    <input type="email" class="form-control" name="email" value="{{$company->email}}"
+                                        required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">FAX</label>
-                                    <input type="text" class="form-control" name="fax" value="{{$company->fax}}" required />
+                                    <input type="text" class="form-control" name="fax" value="{{$company->fax}}"
+                                        required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Phone NO.</label>
-                                    <input type="text" class="form-control" name="phone" value="{{$company->phone}}" required />
+                                    <input type="text" class="form-control" name="phone" value="{{$company->phone}}"
+                                        required />
                                 </div>
                             </div>
                         </div>
@@ -64,19 +68,23 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">Office Address</label>
-                                    <input type="text" class="form-control" value="{{$company->office_address}}" name="office_address" required />
+                                    <input type="text" class="form-control" value="{{$company->office_address}}"
+                                        name="office_address" required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Office Location</label>
-                                    <input type="text" class="form-control" name="office_location" value="{{$company->office_location}}" required />
+                                    <input type="text" class="form-control" name="office_location"
+                                        value="{{$company->office_location}}" required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Factory Address</label>
-                                    <input type="text" class="form-control" name="factory_address" value="{{$company->factory_address}}" required />
+                                    <input type="text" class="form-control" name="factory_address"
+                                        value="{{$company->factory_address}}" required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Factory Location</label>
-                                    <input type="text" class="form-control" name="factory_location" value="{{$company->factory_location}}" required />
+                                    <input type="text" class="form-control" name="factory_location"
+                                        value="{{$company->factory_location}}" required />
                                 </div>
                             </div>
                         </div>
@@ -85,36 +93,42 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">NTN</label>
-                                    <input type="text" class="form-control" name="ntn" value="{{$company->ntn}}" required />
+                                    <input type="text" class="form-control" name="ntn" value="{{$company->ntn}}"
+                                        required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">STRN</label>
-                                    <input type="text" class="form-control" name="strn" value="{{$company->strn}}" required />
+                                    <input type="text" class="form-control" name="strn" value="{{$company->strn}}"
+                                        required />
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group mt-5">
                             <label>Bank Details</label>
+                            <div class="float-right">
+                                <div class="btn btn-success addBank d-flex align-items-center"><i
+                                        class='bx bx-plus-medical'></i></div>
+                            </div>
                             @foreach($company->bank as $key=>$bank)
                             <div class="row align-items-center">
                                 <div class="col">
                                     <label class="col-form-label">Title</label>
-                                    <input type="text" class="form-control" value="{{$bank->title}}" name="title[]" required />
+                                    <input type="text" class="form-control" value="{{$bank->title}}" name="title[]"
+                                        required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Account NO/IBAN</label>
-                                    <input type="text" class="form-control" name="account_no[]" value="{{$bank->account_no}}" required />
+                                    <input type="text" class="form-control" name="account_no[]"
+                                        value="{{$bank->account_no}}" required />
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Bank</label>
-                                    <input type="text" class="form-control" name="bank[]" value="{{$bank->bank}}" required />
+                                    <input type="text" class="form-control" name="bank[]" value="{{$bank->bank}}"
+                                        required />
                                 </div>
-                                @if($key==0)
-                                <div class="col addBank"><i class="bx bx-plus-medical"></i></div>
-                                @else
-                                     <div class="col"></div>
-                                @endif
+
+                                <div class="col"></div>
 
                             </div>
                             @endforeach
@@ -147,7 +161,12 @@
                             <label class="col-form-label" >Bank</label>
                             <input type="text" class="form-control" name="bank[]" required/>
                                  </div>
-                             <div class="col removeBank"><i class="bx bxs-minus-circle"></i></div>
+                                 <div class="col removeBank">
+                                <label class="col-form-label"></label>
+                                <div class=" btn btn-danger d-block" style="width:fit-content">
+                                    <i class='bx bx-x'></i>
+                                </div>
+                            </div>
 
                             </div>
                                  </div>

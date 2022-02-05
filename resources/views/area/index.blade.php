@@ -2,16 +2,16 @@
 
 @section('content')
 
-<span class="text">Area</span>
+<span class="text">Destination</span>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title float-left">Area List</h4>
+                    <h4 class="card-title float-left">Destination List</h4>
                     <div class="float-right">
-                        <a href="{{route('area.create')}}" class="btn btn-primary">Add Area</a>
+                        <a href="{{route('destination.create')}}" class="btn btn-primary">Add Destination</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -30,7 +30,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Zone</th>
+                                    <th>Area</th>
+                                    <th>Address</th>
+                                    <th>Destination Type</th>
+                                    <th>Location</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,10 +42,14 @@
                                 @foreach($areas as $area)
                                 <tr>
                                     <td>{{$area->id}}</td>
-                                    <td>{{$area->name}}</td>
+                                    <td>{{$area->zone}}</td>
+                                    <td>{{$area->area}}</td>
+                                    <td>{{$area->address}}</td>
+                                    <td>{{$area->destination_type}}</td>
+                                    <td>{{$area->location}}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('area.edit',$area->id)}}" class="btn btn-warning mr-2">Edit</a>
-                                        <form method="POST" action="{{route('area.destroy',$area->id)}}">
+                                        <a href="{{route('destination.edit',$area->id)}}" class="btn btn-warning mr-2">Edit</a>
+                                        <form method="POST" action="{{route('destination.destroy',$area->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger">Delete</button>
