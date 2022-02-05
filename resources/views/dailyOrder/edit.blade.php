@@ -80,7 +80,7 @@
                         </div>
 
                          <div class="form-group">
-                            <label class="col-form-label">Destination</label>
+                            <label class="col-form-label">Destination (Add Multiple | separeted by coma(,) i.e. (abc, xyz) or Hit Enter)</label>
                            <input type="text" value="{{implode(',', json_decode($dailyOrder->destination))}}"  class="form-control destination "   data-role="tagsinput" name="destination" required />
                         </div>
 

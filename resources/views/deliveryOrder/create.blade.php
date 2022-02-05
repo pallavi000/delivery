@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label class="col-form-label"> Company</label>
+                                    <label class="col-form-label">Company</label>
                                     <select class="form-control company-select" name="company_id" required>
                                         <option value="">Please Select Type </option>
                                         @foreach($companies as $company)
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label">DO Number</label>
+                            <label class="col-form-label">DO Number (Add Multiple | separeted by coma(,) i.e. (123, 456) or Hit Enter)</label>
                             <input type="text" class="form-control do-number" name="do_number" required />
                         </div>
 
