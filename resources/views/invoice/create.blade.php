@@ -252,6 +252,7 @@
         $(function () {
             $('.select-multiple').selectpicker();
         });
+       
         $('.vehicle-select').select2({
             width: '100%',
             placeholder: "Select A Vehicle"

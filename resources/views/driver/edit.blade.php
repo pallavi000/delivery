@@ -1,7 +1,10 @@
 @extends('layouts.sidebar')
 
 @section('content')
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  
 <span class="text">Driver</span>
 </div>
 <div class="container-fluid">
@@ -45,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Mobile</label>
-                            <input type="text" class="form-control" name="mobile" value="{{$driver->mobile}}"
+                            <input type="text" class="form-control mobile" data-role="tagsinput" name="mobile" value="{{$driver->mobile}}"
                                 required />
                         </div>
                         <div class="form-group">
@@ -59,17 +62,6 @@
                             <input type="text" class="form-control" name="cnic_no" value="{{$driver->cnic_no}}"
                                 required />
                         </div>
-                        <div class="form-group">
-                            <label class="col-form-label"> Company</label>
-                            <select class="form-control" name="company_id" required>
-                                <option value="">Please Select Type </option>
-                                @foreach($companies as $company)
-                                <option value="{{$company->id}}" @if($driver->company->id==$company->id) selected
-                                    @endif>{{$company->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         <div class="form-group">
                             <label class="col-form-label">Picture</label>
                             <div class="row">
@@ -126,4 +118,12 @@
         </div>
     </div>
 </div>
+
+<script>
+$('.mobile').tagsinput({
+  confirmKeys: [13, 44],
+  trimValue: true
+
+});
+</script>
 @endsection

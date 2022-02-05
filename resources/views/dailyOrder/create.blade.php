@@ -52,8 +52,11 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    
                             <label class="col-form-label">Dealer</label>
                             <select class="form-control dealer-select" name="dealer_id" required>
                                 <option value="">Please Select Dealer</option>
@@ -63,6 +66,13 @@
                               
                                 @endforeach
                             </select>
+                                </div>
+                                <div class="col">
+                                     <label class="col-form-label">Receiver</label>
+                                     <input type="text"  class="form-control"  name="receiver" required />
+                       
+                                </div>
+                            </div>
                         </div>
 
                          <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Bank;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -38,19 +39,50 @@ class CompanyController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            'address'=>'required'
+            'office_address'=>'required',
+            'email'=>'required',
+            'fax'=>'required',
+            'phone'=>'required',
+            'office_location'=>'required',
+            'factory_address'=>'required',
+            'factory_location'=>'required',
+            'ntn'=>'required',
+            'strn'=>'required',
         ]);
 
         $company = Company::create([
             'name'=>$request->name,
-            'address'=>$request->address
+            'office_address'=>$request->office_address,
+            'email'=>$request->email,
+            'fax'=>$request->fax,
+            'phone'=>$request->phone,
+            'office_location'=>$request->office_location,
+            'factory_address'=>$request->factory_address,
+            'factory_location'=>$request->factory_location,
+            'ntn'=>$request->ntn,
+            'strn'=>$request->strn,
 
         ]);
         if($company){
+            $titles = $request->title;
+            $account_nos = $request->account_no;
+            $banks = $request->bank;
+
+            for($i=0;$i<sizeof($titles);$i++){
+              $bank= Bank::create([
+                'title'=> $titles[$i],
+                'account_no'=>$account_nos[$i],
+                'bank' => $banks[$i],
+                'company_id'=>$company->id
+              ]); 
+            }
+
             return redirect()->back()->with(['success' => 'Company created successfully!!']);
         }else{
             return redirect()->back()->with(['error' => 'Internal server error']);
         }
+
+
     }
 
     /**
@@ -86,12 +118,46 @@ class CompanyController extends Controller
     {
          $this->validate($request,[
             'name'=>'required',
-            'address'=>'required'
+            'office_address'=>'required',
+            'email'=>'required',
+            'fax'=>'required',
+            'phone'=>'required',
+            'office_location'=>'required',
+            'factory_address'=>'required',
+            'factory_location'=>'required',
+            'ntn'=>'required',
+            'strn'=>'required',
         ]);
+            $company->name=$request->name;
+            $company->office_address=$request->office_address;
+            $company->email=$request->email;
+            $company->fax=$request->fax;
+            $company->phone=$request->phone;
+            $company->office_location=$request->office_location;
+            $company->factory_address=$request->factory_address;
+            $company->factory_location=$request->factory_location;
+            $company->ntn=$request->ntn;
+            $company->strn=$request->strn;
+             $company->save(); 
 
-        $company->name = $request->name;
-        $company->address = $request->address;
-        $company->save();
+       
+
+         $titles = $request->title;
+            $account_nos = $request->account_no;
+            $banks = $request->bank;
+
+            for($i=0;$i<sizeof($titles);$i++){
+              $bank= Bank::updateorCreate([
+                  'account_no' => $account_nos[$i],
+                  'company_id' =>$company->id
+              ],[
+                'title'=> $titles[$i],
+                'account_no'=>$account_nos[$i],
+                'bank' => $banks[$i],
+                'company_id'=>$company->id
+              ]); 
+            }
+
         return redirect()->back()->with(['success' => 'Company updated successfully!!']);
     }
 

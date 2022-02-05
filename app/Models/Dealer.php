@@ -14,4 +14,8 @@ class Dealer extends Model
     public function company(){
         return $this->belongsTo('App\Models\Company');
     }
+
+     public function bank(){
+        return$this->hasMany('App\Models\Bank');
+    }
 }

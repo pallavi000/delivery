@@ -50,7 +50,7 @@
                                     <td>{{$invoice->total_weight}}</td>
                                     <td>{{$invoice->commission }}</td>
                                     <td class="d-flex">
-                                        <a href="{{route('invoice.show',$invoice->id)}}" class="btn btn-warning mr-2">Show</a>
+                                        <a href="{{route('invoice.show',$invoice->id)}}" class="btn btn-success mr-2">View</a>
                                         <form method="POST" action="{{route('invoice.destroy',$invoice->id)}}">
                                             @csrf
                                             @method('DELETE')

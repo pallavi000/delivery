@@ -48,8 +48,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label">DO Number</label>
-                            <input type="text" class="form-control" name="do_number" required/>
+                            <div class="do-number">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Dealer</label>
@@ -149,6 +149,33 @@ $('.company-select').on('change',function(){
         }else{
         $('.power-brand').show()
            $('.lucky-brand').hide()
+        }
+
+        if(name=="power"){
+                var div=` 
+                         <label class="col-form-label">DO Number</label>
+                         <div class="row pl-3">
+                            <div class="col px-0">
+                            <input type="text" name="do_number[]" class="form-control" value="SOrd - " readonly required >
+                            </div>
+                            <div class="col px-0">
+                            <input type="text" class="form-control"  name="do_number[]" required >
+                            </div>
+                            <div class="col px-0">
+                            <input type="text" class="form-control" name="do_number[]" required value="/" readonly >
+                            </div>
+                            <div class="col px-0">
+                            <input type="text" class="form-control" name="do_number[]"  required>
+                            </div>
+                        </div>`
+
+                        $('.do-number').html(div)
+        }else{
+            var div = `<label class="col-form-label">DO Number</label>
+             <input type="number" class="form-control" name="do_number" required/>`
+
+             $('.do-number').html(div)
+            
         }
 
 

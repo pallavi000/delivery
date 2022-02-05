@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\Company;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+ use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -73,6 +74,16 @@ class InvoiceController extends Controller
             'commission'=>$request->commission,
         ]);
 
+        foreach($request->delivery_order_id as $delivery_id){
+            DeliveryOrder::where('id',$delivery_id)->update([
+                'status'=>'closed'
+            ]);
+        }
+
+        
+
+        
+
          return redirect()->back()->with(['success' => 'Invoice Created successfully!!']);
 
 
@@ -86,7 +97,9 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        return view('invoice.show',compact('invoice'));
+        $pdf = PDF::loadView('invoice.show', $invoice->toArray());
+        return $pdf->stream();
+
     }
 
     /**

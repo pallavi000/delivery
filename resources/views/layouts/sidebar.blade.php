@@ -22,7 +22,7 @@
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 
-    <script src="{{'js/bootstrap.min.js'}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
     <meta charset="UTF-8">
     <!-- Boxiocns CDN Link -->

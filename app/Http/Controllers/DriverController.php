@@ -45,11 +45,26 @@ class DriverController extends Controller
             'mobile'=>'required',
             'address'=>'required',
             'cnic_no'=>'required',
-            'company_id'=>'required',
             'picture'=>'required|mimes:jpeg,png,jpg',
             'cnic_front_pic'=>'required|mimes:jpeg,png,jpg',
             'cnic_back_pic'=>'required|mimes:jpeg,png,jpg'
         ]);
+        $mobile = explode(',',$request->mobile);
+        $result = false;
+       foreach($mobile as $mobile){
+           if(strlen($mobile)==11){
+
+           }else{
+               $result= true;
+           }
+       }
+       if($result){
+           return redirect()->back()->with(['error'=>'Enter Valid Mobile Number']);
+       }
+       if(strlen($request->cnic_no)){
+         return redirect()->back()->with(['error'=>'Please Enter Valid CNIC Number']);
+
+       }
 
          if($request->hasFile('picture')){
             $file = $request->file('picture');
@@ -77,10 +92,10 @@ class DriverController extends Controller
 
         $driver = Driver::create([
             'name'=> $request->name,
-            'mobile'=>$request->mobile,
+            'mobile'=>json_encode($mobile),
             'address'=>$request->address,
             'cnic_no'=>$request->cnic_no,
-            'company_id'=>$request->company_id,
+            'company_id'=>' ',
             'picture'=>$pictureUrl,
             'cnic_front_pic'=>$frontUrl,
             'cnic_back_pic' =>$backUrl
@@ -131,9 +146,26 @@ class DriverController extends Controller
             'mobile'=>'required',
             'address'=>'required',
             'cnic_no'=>'required',
-            'company_id'=>'required',
         ]);
        
+         $mobile = explode(',',$request->mobile);
+        $result = false;
+       foreach($mobile as $mobile){
+           if(strlen($mobile)==11){
+
+           }else{
+               $result= true;
+           }
+       }
+       if($result){
+           return redirect()->back()->with(['error'=>'Enter Valid Mobile Number']);
+       }
+
+       if(strlen($request->cnic_no)!=15){
+         return redirect()->back()->with(['error'=>'Please Enter Valid CNIC Number']);
+
+       }
+
 
          if($request->hasFile('picture')){
             $file = $request->file('picture');
@@ -165,10 +197,9 @@ class DriverController extends Controller
 
     
             $driver->name= $request->name;
-            $driver->mobile=$request->mobile;
+            $driver->mobile=json_encode($mobile);
             $driver->address=$request->address;
             $driver->cnic_no=$request->cnic_no;
-            $driver->company_id=$request->company_id;
             
             $driver->save();
     

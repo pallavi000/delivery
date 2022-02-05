@@ -52,7 +52,8 @@ class DailyOrderController extends Controller
             'brand'=> 'required',
             'rate_per_ton'=> 'required',
             'additional_charges'=> 'required',  
-            'status'=>'required'
+            'status'=>'required',
+            'receiver'=>'required'
         ]);
 
             $destination = explode(',',$request->destination);
@@ -84,7 +85,8 @@ class DailyOrderController extends Controller
             'brand'=>json_encode($request->brand),
             'rate_per_ton'=> $request->rate_per_ton,
             'additional_charges'=> $request->additional_charges,  
-            'status'=>$request->status
+            'status'=>$request->status,
+            'receiver'=>$request->receiver
         ]);
 
         $dailyOrder->order_number = $dailyOrder->id;
@@ -139,7 +141,8 @@ class DailyOrderController extends Controller
             'brand'=> 'required',
             'rate_per_ton'=> 'required',
             'additional_charges'=> 'required',  
-            'status'=>'required'
+            'status'=>'required',
+            'receiver'=>'required'
         ]);
 
                 $error = false;
@@ -169,6 +172,7 @@ class DailyOrderController extends Controller
             $dailyOrder->rate_per_ton= $request->rate_per_ton;
             $dailyOrder->additional_charges= $request->additional_charges;  
             $dailyOrder->status=$request->status;
+            $dailyOrder->receiver = $request->receiver;
             $dailyOrder->save();
 
 
