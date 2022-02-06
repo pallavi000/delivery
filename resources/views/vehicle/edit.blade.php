@@ -1,6 +1,17 @@
 @extends('layouts.sidebar')
 
 @section('content')
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+    integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"
+    integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
     integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -104,9 +115,10 @@
                                             value="{{$vehicle->registration_city}}" required />
                                     </div>
                                     <div class="col">
-                                        <label class="col-form-label">Type</label>
-                                        <select class="form-control" name="type" required>
-                                            <option value="">Please Select Type </option>
+                                        <label class="col-form-label">Type (Wheels) <i class="fa fa-toggle-on toggle-wheel-type" style="cursor: pointer;display:none" title="Change to Select"></i></label>
+                                        <div class="wheel-type-div">
+                                        <select class="form-control wheel_type text-capitalize" name="type" required>
+                                            <option value="">Please Select Type</option>
                                             <option value="6-wheeler" @if($vehicle->type=='6-wheeler') selected @endif>6
                                                 Wheeler
                                             </option>
@@ -131,17 +143,32 @@
                                             <option value="24-wheeler" @if($vehicle->type=='24-wheeler') selected
                                                 @endif>24 Wheeler
                                             </option>
+                                            @if($vehicle->type=="6-wheeler" || $vehicle->type=="8-wheeler" || $vehicle->type=="10-wheeler" || $vehicle->type=="12-wheeler" || $vehicle->type=="18-wheeler" || $vehicle->type=="20-wheeler" || $vehicle->type=="22-wheeler" || $vehicle->type=="24-wheeler")
+                                            @else
+                                            <option value="{{$vehicle->type}}" class="text-capitalize" selected>{{$vehicle->type}}</option>
+                                            @endif
+                                            <option value="add-new">Add New</option>
                                         </select>
+                                        </div>
+                                        
                                     </div>
                                     <div class="col">
-                                        <label class="col-form-label"> Body Type</label>
-                                        <select class="form-control" name="body_type" required>
-                                            <option value="">Please Select Type </option>
-                                            <option value="floor" @if($vehicle->body_type=='floor') selected
-                                                @endif>Floor</option>
-                                            <option value="box" @if($vehicle->body_type=='box') selected @endif>Box
-                                            </option>
-                                        </select>
+                                        <label class="col-form-label">Body Type <i class="fa fa-toggle-on toggle-body-type" style="cursor: pointer;display:none" title="Change to Select"></i></label>
+                                        <div class="body-type-div">
+                                            <select class="form-control body_type text-capitalize" name="body_type" required>
+                                                <option value="">Please Select Type </option>
+                                                <option value="floor" @if($vehicle->body_type=='floor') selected
+                                                    @endif>Floor</option>
+                                                <option value="box" @if($vehicle->body_type=='box') selected @endif>Box
+                                                </option>
+                                                @if($vehicle->body_type=="box" || $vehicle->body_type=="floor")
+                                                @else
+                                                <option value="{{$vehicle->body_type}}" class="text-capitalize" selected>{{$vehicle->body_type}}</option>
+                                                @endif
+                                                <option value="add-new">Add New</option>
+                                            </select>
+                                        </div>
+                                        
                                     </div>
 
                                 </div>
@@ -150,33 +177,26 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <label class="col-form-label">Loading Capacity</label>
-                                        <input type="text" value="{{$vehicle->capacity}}" class="form-control"
-                                            name="capacity" required />
-                                    </div>
-                                    @foreach(json_decode($vehicle->intentions) as $key => $intention)
-                                    <div class="col">
-                                        @if($key==0)
-                                        <label class="col-form-label d-flex align-items-center">
-                                            Intentions
-                                            <div class="col addIntentions">
-                                                <label class="col-form-label"></label>
-                                                <i class='btn btn-success btn-sm bx bx-plus-medical'></i>
+                                        <label class="col-form-label">Loading Capacity [Min | Max]</label>
+                                        <div class="row">
+                                            <div class="col pr-0">
+                                                <input type="text" class="form-control" name="capacity[]" value="{{json_decode($vehicle->capacity)[0]}}" placeholder="Minimum Capacity" required />
                                             </div>
-                                        </label>
-                                        @else
-                                        <label class="col-form-label">
-                                            Intentions
-                                        </label>
-                                        @endif
-
-                                        <input type="text" value="{{$intention}}" class="form-control"
-                                            name="intentions[]" required />
+                                            <div class="col px-0">
+                                                <input type="text" class="form-control" name="capacity[]" value="{{json_decode($vehicle->capacity)[1]}}" placeholder="Maximum Capacity" required />
+                                            </div>
+                                        </div>
                                     </div>
-                                    @endforeach
+                                    <div class="col">
+                                        <label class="col-form-label d-flex align-items-center">
+                                            Intentions (Multiple | separeted by coma(,) i.e. (abc, xyz))
+                                        </label>
+                                        <input type="text" value="{{implode(",",json_decode($vehicle->intentions))}}" class="form-control intentions"
+                                            name="intentions" required />
+                                            
+                                    </div>
                                 </div>
-                                <div class="row extra-intentions">
-                                </div>
+                                
                             </div>
                         </div>
 
@@ -251,22 +271,64 @@
     </div>
 </div>
 <script>
-    $('.addIntentions').on('click', () => {
-        var ele = `<div class="col">
-                        <label class="col-form-label d-flex align-items-center">
-                            Intentions
-                            <div class="col removeIntentions">
-                                <label class="col-form-label"></label>
-                                <i class='btn btn-danger btn-sm bx bx-x'></i>
-                            </div>
-                        </label>
+    $('.intentions').tagsinput({
+        confirmKeys: [13, 44],
+        trimValue: true
+    });
+        function changeBodyType(e) {
+        var ele = ''
+        if(e.target.value=="add-new") {
+            ele += `<input type="text" name="body_type" placeholder="Enter Body Type" class="form-control" required/>`
+            $('.toggle-body-type').show()
+            $('.body-type-div').html(ele)
+        } else {
+            $('.toggle-body-type').hide()
+        }
+    }
 
-                        <input type=" text" class="form-control" name="intentions[]" required />
-                    </div>`
-        document.querySelector('.extra-intentions').innerHTML += ele
-        $('.removeIntentions').on('click', function (e) {
-            $(e.currentTarget).parent().parent().remove()
-        })
+    function changeWheelType(e) {
+        var ele = ''
+        if(e.target.value=="add-new") {
+            ele += `<input type="text" name="type" placeholder="Enter Type" class="form-control" required/>`
+            $('.toggle-wheel-type').show()
+            $('.wheel-type-div').html(ele)
+        } else {
+            $('.toggle-wheel-type').hide()
+        }
+    }
+
+    $(document).on('change','.body_type', (e)=>{
+        changeBodyType(e)
+    });
+    $(document).on('change','.wheel_type', (e)=>{
+        changeWheelType(e)
+    });
+
+    $('.toggle-body-type').on('click', ()=>{
+        var ele = `<select class="form-control body_type" name="body_type" required>
+                        <option value="">Please Select Type </option>
+                        <option value="floor">Floor</option>
+                        <option value="box">Box</option>
+                        <option value="add-new">Add New</option>
+                    </select>`
+        $('.toggle-body-type').hide()
+        $('.body-type-div').html(ele)
+    })
+    $('.toggle-wheel-type').on('click', ()=>{
+        var ele = `<select class="form-control wheel_type" name="type" required>
+                        <option value="">Please Select Type </option>
+                        <option value="6-wheeler">6 Wheeler</option>
+                        <option value="8-wheeler">8 Wheeler</option>
+                        <option value="10-wheeler">10 Wheeler</option>
+                        <option value="12-wheeler">12 Wheeler</option>
+                        <option value="18-wheeler">18 Wheeler</option>
+                        <option value="20-wheeler">20 Wheeler</option>
+                        <option value="22-wheeler">22 Wheeler</option>
+                        <option value="24-wheeler">24 Wheeler</option>
+                        <option value="add-new">Add New</option>
+                    </select>`
+        $('.toggle-wheel-type').hide()
+        $('.wheel-type-div').html(ele)
     })
 </script>
 @endsection

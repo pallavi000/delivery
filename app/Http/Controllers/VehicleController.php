@@ -61,8 +61,8 @@ class VehicleController extends Controller
             'type'=>$request->type,
             'body_type'=>$request->body_type,
             'company_id'=> 0,
-            'capacity' => $request->capacity,
-            'intentions' => json_encode($request->intentions),
+            'capacity' => json_encode($request->capacity),
+            'intentions' => json_encode(explode(",", $request->intentions)),
             'owner_name' => $request->owner_name,
             'owner_number' => $request->owner_number,
             'reliable' => $request->reliable,
@@ -130,8 +130,8 @@ class VehicleController extends Controller
             $vehicle->type=$request->type;
             $vehicle->body_type=$request->body_type;
 
-            $vehicle->capacity = $request->capacity;
-            $vehicle->intentions = json_encode($request->intentions);
+            $vehicle->capacity = json_encode($request->capacity);
+            $vehicle->intentions = json_encode(explode(",", $request->intentions));
             $vehicle->owner_name = $request->owner_name;
             $vehicle->owner_number = $request->owner_number;
             $vehicle->reliable = $request->reliable;

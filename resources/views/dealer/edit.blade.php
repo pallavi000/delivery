@@ -2,6 +2,9 @@
 
 @section('content')
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <span class="text">Dealer</span>
 </div>
 <div class="container-fluid">
@@ -78,13 +81,22 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Zone</label>
-                                    <input type="text" value="{{$dealer->zone}}" class="form-control" name="zone"
-                                        required />
+                                    <select class="form-control zone" name="zone" required>
+                                        <option value="">Please Select Zone</option>
+                                    @foreach($destinations as $destination)
+                                    <option value="{{$destination->zone}}" @if($destination->zone==$dealer->zone) selected @endif>{{$destination->zone}}</option>
+                                    @endforeach
+                                    </select>
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Area</label>
-                                    <input type="text" value="{{$dealer->area}}" class="form-control" name="area"
-                                        required />
+                                    <select class="form-control area" name="area" required>
+                                        <option value="">Please Select Area</option>
+                                    @foreach($destinations as $destination)
+                                    <option value="{{$destination->area}}" @if($destination->area==$dealer->area) selected @endif>{{$destination->area}}</option>
+                                    @endforeach
+                                    </select>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -298,6 +310,13 @@
         })
 
     })
+
+      $(document).ready(function() {
+        $('.zone').select2();
+    });
+    $(document).ready(function() {
+        $('.area').select2();
+    });
 
 
 

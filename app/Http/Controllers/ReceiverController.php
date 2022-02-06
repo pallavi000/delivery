@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Bank;
 use App\Models\Dealer;
 use App\Models\Receiver;
 use Illuminate\Http\Request;
@@ -47,16 +48,32 @@ class ReceiverController extends Controller
             'zone' => 'required',
             'area' => 'required',
             'address' => 'required',
+            'ranking' => 'required',
         ]);
 
-        Receiver::create([
+        $receiver = Receiver::create([
             'dealer_id' => $request->dealer_id,
             'name' => $request->name,
             'number' => $request->number,
             'zone' => $request->zone,
             'area' => $request->area,
             'address' => $request->address,
+            'ranking' => $request->ranking
         ]);
+
+        $titles = $request->title;
+        $account_nos = $request->account_no;
+        $banks = $request->bank;
+        for($i=0;$i<sizeof($titles);$i++){
+            Bank::create([
+            'title'=> $titles[$i],
+            'account_no'=>$account_nos[$i],
+            'bank' => $banks[$i],
+            'receiver_id'=>$receiver->id
+            ]); 
+        }
+
+
         return redirect()->back()->with(['success'=>'Receiver Added Successfully']);
     }
 
@@ -100,6 +117,7 @@ class ReceiverController extends Controller
             'zone' => 'required',
             'area' => 'required',
             'address' => 'required',
+            'ranking' => 'required',
         ]);
 
         $receiver->dealer_id= $request->dealer_id;
@@ -108,7 +126,24 @@ class ReceiverController extends Controller
         $receiver->zone= $request->zone;
         $receiver->area= $request->area;
         $receiver->address= $request->address;
+        $receiver->ranking = $request->ranking;
         $receiver->save();
+        
+        $titles = $request->title;
+        $account_nos = $request->account_no;
+        $banks = $request->bank;
+
+        for($i=0;$i<sizeof($titles);$i++){
+            $bank= Bank::updateOrCreate([
+                'account_no'=>$account_nos[$i],
+                'receiver_id' =>$receiver->id
+            ],[
+            'title'=> $titles[$i],
+            'account_no'=>$account_nos[$i],
+            'bank' => $banks[$i],
+            'receiver_id'=>$receiver->id
+            ]); 
+        }
         return redirect()->back()->with(['success'=>'Receiver Updated Successfully']);
     }
 

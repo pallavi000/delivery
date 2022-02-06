@@ -34,7 +34,6 @@
                                     <th>Mobile</th>
                                      <th>Address</th>
                                      <th>CNIC No</th>
-                                    <th>Company</th>
                                     <th>Picture</th>
                                     <th>CNIC Front Pic</th>
                                     <th>CNIC Back Pic</th>
@@ -49,7 +48,6 @@
                                     <td>{{$driver->mobile}}</td>
                                     <td>{{$driver->address}}</td>
                                     <td>{{$driver->cnic_no}}</td>
-                                    <td>{{$driver->company->name}}</td>
                                      <td><img src="{{$driver->picture}}"  width="75" height="75" /></td>
                                     <td><img src="{{$driver->cnic_front_pic}}" width="75" height="75"/></td>
                                     <td><img src="{{$driver->cnic_back_pic}}" width="75" height="75"/></td>

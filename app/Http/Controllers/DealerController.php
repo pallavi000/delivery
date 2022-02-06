@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Dealer;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class DealerController extends Controller
     public function create()
     {
         $companies = Company::all();
-        return view('dealer.create',compact('companies'));
+        $destinations = Area::all();
+        return view('dealer.create',compact('companies', 'destinations'));
     }
     /**
      * Store a newly created resource in storage.
@@ -123,7 +125,8 @@ class DealerController extends Controller
     public function edit(Dealer $dealer)
     {
         $companies = Company::all();
-        return view('dealer.edit',compact('companies','dealer'));
+        $destinations = Area::all();
+        return view('dealer.edit',compact('companies','dealer','destinations'));
 
     }
 

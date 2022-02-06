@@ -13,4 +13,8 @@ class Receiver extends Model
     public function dealer(){
         return $this->belongsTo('App\Models\Dealer');
     }
+
+    public function bank(){
+        return $this->hasMany('App\Models\Bank');
+    }
 }

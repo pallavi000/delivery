@@ -2,6 +2,16 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    .star {
+        color: #F62;
+    }
+</style>
+
 <span class="text">Receiver</span>
 </div>
 <div class="container-fluid">
@@ -36,6 +46,7 @@
                                     <th>Zone</th>
                                     <th>Area</th>
                                     <th>Address</th>
+                                    <th>Ranking</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -49,6 +60,13 @@
                                     <td>{{$receiver->zone}}</td>
                                     <td>{{$receiver->area}}</td>
                                     <td>{{$receiver->address}}</td>
+                                    <td>
+                                        @php
+                                        for($i=0;$i<$receiver->ranking;$i++) {
+                                            echo "<i class='fa fa-star mr-1 star'></i>";
+                                            }
+                                            @endphp
+                                    </td>
                                     <td class="d-flex">
                                         <a href="{{route('receiver.edit',$receiver->id)}}" class="btn btn-warning mr-2">Edit</a>
                                         <form method="POST" action="{{route('receiver.destroy',$receiver->id)}}">

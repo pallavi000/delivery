@@ -25,7 +25,13 @@
                             @csrf
                             <input type="text" class="d-none multi-dlv-ids" name="vehicles" required />
                         </form>
-                        <button type="button" class="btn btn-primary multi-dlv-btn mr-2">Add to Daily Lineup</button>
+                        <form class="multi-dlv-remove-form" method="POST" action="{{route('dlv.multi.remove')}}">
+                            @csrf
+                            <input type="text" class="d-none multi-dlv-remove-ids" name="vehicles" required />
+                        </form>
+                        <a href="{{route('daily-order.index')}}" class="btn btn-primary mr-2">Daily Orders</a>
+                        <button type="button" class="btn btn-danger multi-dlv-remove-btn">Remove DLV</button>
+                        <button type="button" class="btn btn-primary multi-dlv-btn mr-2">Add DLV</button>
                         <a href="{{route('dlv.show')}}" class="btn btn-primary mr-2">Show DLV</a>
                         <a href="{{route('vehicle.create')}}" class="btn btn-primary">Add Vehicle</a>
                     </div>
@@ -125,6 +131,18 @@
             });
             $('.multi-dlv-ids').val(vehicle_ids)
             $('.multi-dlv-form').submit()
+        }
+    })
+    $('.multi-dlv-remove-btn').on('click', () => {
+        var checks = $('.multi-dlv:checkbox:checked')
+        if (checks.length > 0) {
+            var vehicle_ids = []
+            $('.multi-dlv:checkbox:checked').each(function () {
+                var vehicle_id = $(this).attr('vehicle_id')
+                vehicle_ids.push(vehicle_id)
+            });
+            $('.multi-dlv-remove-ids').val(vehicle_ids)
+            $('.multi-dlv-remove-form').submit()
         }
     })
 </script>
