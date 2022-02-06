@@ -70,8 +70,11 @@
 
                         <div class="form-group">
                             <label class="col-form-label">DO Number (Add Multiple | separeted by coma(,) i.e. (123, 456) or Hit Enter)</label>
+                            <div class="position-relative">
                             <input type="text" class="form-control do-number" name="do_number" required />
+                            <div class="do-count">0</div>
                         </div>
+                    </div>
 
                         <div class="form-group">
                             <label class="col-form-label">Dealer</label>
@@ -227,6 +230,17 @@
         confirmKeys: [13, 44],
         trimValue: true
     });
+
+    $('input').on('itemAdded', function(event) {
+       
+    var do_length = $(".do-number").tagsinput('items').length
+    $('.do-count').html(do_length)
+    });
+
+    $('input').on('itemRemoved', function(event) {
+        var do_length = $(".do-number").tagsinput('items').length
+    $('.do-count').html(do_length)
+});
 
 
 </script>

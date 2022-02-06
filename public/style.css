@@ -434,6 +434,20 @@ select.list-dt:focus {
     color: #000000
 }
 
+.do-count{
+  position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(0px, -50%);
+    border-radius: 5px;
+    background: #5cb85c;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
 #progressbar li {
     list-style-type: none;
     font-size: 12px;
