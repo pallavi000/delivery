@@ -93,7 +93,6 @@
                     </div>
                     @endif
 
-
                     <form method="POST" action="{{route('vehicle.store')}}">
                         @csrf
                         <div class="form-group">

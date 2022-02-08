@@ -186,6 +186,5 @@ $('.brand-select').on('change',function(){
 
 
 
-
 </script>
 @endsection

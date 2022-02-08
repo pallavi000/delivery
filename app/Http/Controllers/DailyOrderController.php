@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\DailyOrder;
 use App\Models\Dealer;
 use App\Models\Company;
+use App\Models\Driver;
+use App\Models\Vehicle;
+use App\Models\DeliveryOrder;
 use Illuminate\Http\Request;
 
 class DailyOrderController extends Controller
@@ -19,7 +22,10 @@ class DailyOrderController extends Controller
         $dailyOrders = DailyOrder::all();
         $companies = Company::all();
         $dealers = Dealer::all();
-        return view('dailyOrder.index',compact('companies','dealers','dailyOrders'));
+         $drivers = Driver::all();
+        $vehicles = Vehicle::all();
+        $deliveryOrders= DeliveryOrder::all();
+        return view('dailyOrder.index',compact('companies','vehicles','drivers','dealers','dailyOrders','deliveryOrders'));
     }
 
     /**

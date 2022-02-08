@@ -21,6 +21,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
+        
         return view('invoice.index',compact('invoices'));
     }
 
@@ -48,33 +49,51 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+     
+
         $this->validate($request,[
-            'daily_order_id'=>'required',
-            'delivery_order_id'=>'required',
-            'daily_order_weight'=>'required',
-            'delivery_order_weight'=>'required',
+            'dailyOrder_ids'=>'required',
+            'deliveryOrder_ids'=>'required',
+            'dailyOrder_weight'=>'required',
+            'deliveryOrder_weight'=>'required',
             'total_weight'=>'required',
-            'company_id'=>'required',
+            // 'company_id'=>'required',
             'destination'=>'required',
             'vehicle_id'=>'required',
             'driver_id'=>'required',
-            'commission'=>'required',
+            // 'commission'=>'required',
         ]);
 
+       
+        
+        $deliveryOrder_ids = explode(',',$request->deliveryOrder_ids);
+        $dailyOrder_ids = explode(',',$request->dailyOrder_ids);
+        $destinations = explode(',',$request->destination);
+ 
         $invoice = Invoice::create([
-            'daily_order_id'=>json_encode($request->daily_order_id),
-            'delivery_order_id'=>json_encode($request->delivery_order_id),
-            'daily_order_weight'=>$request->daily_order_weight,
-            'delivery_order_weight'=>$request->delivery_order_weight,
+            'daily_order_id'=>json_encode($dailyOrder_ids),
+            'delivery_order_id'=>json_encode($deliveryOrder_ids),
+            'daily_order_weight'=>$request->dailyOrder_weight,
+            'delivery_order_weight'=>$request->deliveryOrder_weight,
             'total_weight'=>$request->total_weight,
-            'company_id'=>json_encode($request->company_id),
-            'destination'=>json_encode($request->destination),
+            'company_id'=>' ',
+            'destination'=>json_encode($destinations),
             'vehicle_id'=>json_encode($request->vehicle_id),
             'driver_id'=>json_encode($request->driver_id),
-            'commission'=>$request->commission,
+            'commission'=>$request->fixed_commission,
+            'erpt'=>$request->erpt,
+            'arpt'=>$request->arpt,
+            'cpt'=>$request->cpt,
+            'opt'=>$request->opt,
+            'total_quantity'=>$request->total_quantity,
+            'fixed_commission'=>$request->fixed_commission,
+            'ofc'=>$request->ofc,
+            'advance_freight'=>$request->advance_freight,
+            'balance_freight'=>$request->balance_freight,
+            'total_freight'=>$request->total_freight
         ]);
 
-        foreach($request->delivery_order_id as $delivery_id){
+        foreach($deliveryOrder_ids as $delivery_id){
             DeliveryOrder::where('id',$delivery_id)->update([
                 'status'=>'closed'
             ]);
