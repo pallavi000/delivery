@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <span class="text">Invoice</span>
 </div>
 <div class="container-fluid">
@@ -56,10 +57,15 @@
                                             <li> {{$id}}</li>
                                         @endforeach
                                     </ul> </td>
-                                    <td> <ul  class="ml-3 text-nowrap">
+                                    <td>
+                                        @if(strlen(trim($invoice->delivery_order_id))>0)
+                                        <ul  class="ml-3 text-nowrap">
                                         @foreach(json_decode($invoice->delivery_order_id ) as $id)
                                             <li> {{$id}}</li>
                                         @endforeach
+                                        @else
+                                        NULL
+                                        @endif
                                     </ul> </td>
                                     <td> <ul  class="ml-3 text-nowrap">
                                         @foreach(json_decode($invoice->vehicle_id ) as $id)

@@ -33,8 +33,11 @@
                                     <th>Company</th>
                                     <th>Item Type</th>
                                     <th>Brand</th>
+                                    <th>Units</th>
+                                    <th>Unit Type</th>
                                     <th>Quantity</th>
-                                    <th>Package Type</th>
+                                    <th>Packing Type</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -45,8 +48,41 @@
                                     <td>{{$product->company->name}}</td>
                                     <td>{{$product->item_type}}</td>
                                     <td>{{$product->brand}}</td>
-                                    <td>{{$product->quantity}}</td>
-                                    <td>{{$product->package_type}}</td>
+                                    <td>
+                                        <ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($product->units ) as $key => $unit)
+                                            <li> {{$unit}}</li>
+                                        @endforeach
+                                    </ul>
+                                    </td>
+                                    <td>
+                                        <ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($product->unit_type ) as $key => $unit_type)
+                                            <li> {{$unit_type}}</li>
+                                        @endforeach
+                                    </ul>
+                                    </td>
+                                    <td>
+                                        <ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($product->quantity ) as $key => $quantity)
+                                            <li> {{$quantity}}</li>
+                                        @endforeach
+                                    </ul>
+                                    </td>
+                                    <td>
+                                        <ul  class="ml-3 text-nowrap">
+                                        @foreach(json_decode($product->package_type ) as $key => $package_type)
+                                            <li> {{$package_type}}</li>
+                                        @endforeach
+                                    </ul>
+                                    </td>
+                                    <td>
+                                        @if($product->image)
+                                        <img src="{{$product->image}}"  width="75" height="75"/>
+                                        @else
+                                        NONE
+                                        @endif
+                                    </td>
                                     <td class="d-flex">
                                         <a href="{{route('product.edit',$product->id)}}" class="btn btn-warning mr-2">Edit</a>
                                         <form method="POST" action="{{route('product.destroy',$product->id)}}">

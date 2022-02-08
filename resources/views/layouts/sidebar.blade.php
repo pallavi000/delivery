@@ -28,6 +28,10 @@
     <!-- Boxiocns CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 </head>
 
 <body>
@@ -170,6 +174,12 @@
         sidebarBtn.addEventListener("click", () => {
             sidebar.classList.toggle("close");
         });
+
+
+    $('.select-search').selectpicker({
+        liveSearch: true
+    })
+
     </script>
 
 </body>

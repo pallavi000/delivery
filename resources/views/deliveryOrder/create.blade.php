@@ -53,7 +53,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">Company</label>
-                                    <select class="form-control company-select" name="company_id" required>
+                                    <select class="form-control company-select select-search" name="company_id" required>
                                         <option value="">Please Select Type </option>
                                         @foreach($companies as $company)
                                         <option comp="{{$company->name}}" value="{{$company->id}}">{{$company->name}}
@@ -78,7 +78,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label">Dealer</label>
-                            <select class="form-control dealer-select" name="dealer_id" required>
+                            <select class="form-control dealer-select select-search" name="dealer_id" required>
                                 <option value="">Please Select Dealer</option>
                                 @foreach($dealers as $dealer)
 
@@ -90,7 +90,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label"> Item Type</label>
-                            <select class="form-control" name="item_type" required>
+                            <select class="form-control select-search" name="item_type" required>
                                 <option value="">Please Select Type </option>
                                 <option value="opc">OPC</option>
                                 <option value="src">SRC</option>
@@ -102,7 +102,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label"> Brand</label>
-                                    <select class="form-control" name="brand" required>
+                                    <select class="form-control select-search" name="brand" required>
                                         <option value="">Please Select Brand </option>
                                         <option class="power-brand" value="Power Cement">Power Cement</option>
                                         <option class="power-brand" value="Black Bull">Black Bull</option>
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Quantity</label>
-                                    <select class="form-control quantity-select" name="quantity" required>
+                                    <select class="form-control quantity-select select-search" name="quantity" required>
                                         <option value="">Please Select Quantity </option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Packing Type</label>
-                                    <select class="form-control" name="packing_type" required>
+                                    <select class="form-control select-search" name="packing_type" required>
                                         <option value="">Please Select Packing Type </option>
                                         <option value="paper_bags">Paper Bags</option>
                                         <option value="pp">PP</option>
@@ -241,7 +241,6 @@
         var do_length = $(".do-number").tagsinput('items').length
     $('.do-count').html(do_length)
 });
-
 
 </script>
 @endsection

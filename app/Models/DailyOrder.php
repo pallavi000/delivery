@@ -18,4 +18,8 @@ class DailyOrder extends Model
     public function dealer(){
         return $this->belongsTo('App\Models\Dealer');
     }
+
+    public function receiver() {
+        return $this->belongsTo('App\Models\Receiver');
+    }
 }

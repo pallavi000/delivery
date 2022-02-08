@@ -91,7 +91,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">Dealer</label>
-                                    <select class="form-control" name="dealer_id" required>
+                                    <select class="form-control select-search" name="dealer_id" required>
                                         <option value="">Please Select Dealer</option>
                                         @foreach($dealers as $dealer)
                                         <option value="{{$dealer->id}}">{{$dealer->name}}</option>
@@ -123,7 +123,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label">Zone</label>
-                                    <select class="form-control" name="zone" required>
+                                    <select class="form-control select-search" name="zone" required>
                                         <option value="">Please Select Zone</option>
                                         @foreach($destinations as $destination)
                                         <option value="{{$destination->zone}}">{{$destination->zone}}</option>
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Area</label>
-                                    <select class="form-control" name="area" required>
+                                    <select class="form-control select-search" name="area" required>
                                         <option value="">Please Select Area</option>
                                         @foreach($destinations as $destination)
                                         <option value="{{$destination->area}}">{{$destination->area}}</option>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Address</label>
-                                    <select class="form-control" name="address" required>
+                                    <select class="form-control select-search" name="address" required>
                                         <option value="">Please Select Address</option>
                                         @foreach($destinations as $destination)
                                         <option value="{{$destination->address}}">{{$destination->address}}</option>

@@ -7,7 +7,9 @@ use App\Models\Dealer;
 use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Vehicle;
+use App\Models\Receiver;
 use App\Models\DeliveryOrder;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DailyOrderController extends Controller
@@ -37,7 +39,9 @@ class DailyOrderController extends Controller
     {
         $companies = Company::all();
         $dealers = Dealer::all();
-        return view('dailyOrder.create',compact('companies','dealers'));
+         $receivers = Receiver::all();
+         $users = User::all();
+        return view('dailyOrder.create',compact('companies','users','receivers','dealers'));
         
     }
 
@@ -59,7 +63,8 @@ class DailyOrderController extends Controller
             'rate_per_ton'=> 'required',
             'additional_charges'=> 'required',  
             'status'=>'required',
-            'receiver'=>'required'
+            'receiver'=>'required',
+            'permission' => 'required',
         ]);
 
             $destination = explode(',',$request->destination);
@@ -92,7 +97,8 @@ class DailyOrderController extends Controller
             'rate_per_ton'=> $request->rate_per_ton,
             'additional_charges'=> $request->additional_charges,  
             'status'=>$request->status,
-            'receiver'=>$request->receiver
+            'receiver_id'=>$request->receiver,
+            'permission_id'=>json_encode($request->permission)
         ]);
 
         $dailyOrder->order_number = $dailyOrder->id;
@@ -126,7 +132,9 @@ class DailyOrderController extends Controller
     {
          $companies = Company::all();
         $dealers = Dealer::all();
-        return view('dailyOrder.edit',compact('companies','dealers','dailyOrder'));
+         $receivers = Receiver::all();
+         $users = User::all();
+        return view('dailyOrder.edit',compact('users','companies','receivers','dealers','dailyOrder'));
     }
 
     /**
@@ -148,7 +156,8 @@ class DailyOrderController extends Controller
             'rate_per_ton'=> 'required',
             'additional_charges'=> 'required',  
             'status'=>'required',
-            'receiver'=>'required'
+            'receiver'=>'required',
+            'permission'=>'required'
         ]);
 
                 $error = false;
@@ -178,7 +187,8 @@ class DailyOrderController extends Controller
             $dailyOrder->rate_per_ton= $request->rate_per_ton;
             $dailyOrder->additional_charges= $request->additional_charges;  
             $dailyOrder->status=$request->status;
-            $dailyOrder->receiver = $request->receiver;
+            $dailyOrder->receiver_id = $request->receiver;
+            $dailyOrder->permission_id = $request->permission;
             $dailyOrder->save();
 
 

@@ -75,4 +75,9 @@
         </div>
     </div>
 </div>
+<script>
+       $('select[name="destination_type"').selectpicker({
+        liveSearch: true
+    })
+</script>
 @endsection

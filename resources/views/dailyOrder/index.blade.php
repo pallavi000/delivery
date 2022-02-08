@@ -1,10 +1,11 @@
 @extends('layouts.sidebar')
 
 @section('content')
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-
+ <style>
+    .home-section .home-content .bx-menu, .home-section .home-content .text {
+        font-size: 14px !important;
+    }
+</style>
 
 <div class="modal fade invoice" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -38,7 +39,7 @@
 
                                     <div class="form-group">
                                         <label class="col-form-label">Select Vehicle</label>
-                                        <select class="form-control select-multiple" name="vehicle_id[]"  multiple>
+                                        <select class="form-control select-multiple-vehicle select-multiple" name="vehicle_id[]"  multiple required>
                                             @foreach($vehicles as $vehicle)
                                             <option  value="{{$vehicle->id}}">{{$vehicle->vehicle_no}}</option>
                                             @endforeach
@@ -47,7 +48,7 @@
 
                                     <div class="form-group">
                                         <label class="col-form-label">Select Driver</label>
-                                        <select class="form-control select-multiple" name="driver_id[]"  multiple>
+                                        <select class="form-control select-multiple-driver select-multiple" name="driver_id[]"  multiple required>
                                             @foreach($drivers as $driver)
                                             <option  value="{{$driver->id}}">{{$driver->mobile}}</option>
                                             @endforeach
@@ -81,7 +82,7 @@
                                             </div>
                                             <div class="col">
                                             <label class="col-form-label">Total quantity</label>
-                                            <input class="form-control total_quantity calculate" type="number" name="total_quantity"/>
+                                            <input class="form-control total_quantity" type="number" name="total_quantity" readonly/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -104,12 +105,12 @@
                                             </div>
                                             <div class="col">
                                             <label class="col-form-label">Balance Freight</label>
-                                            <input class="form-control balance_freight" name="balance_freight"/>
+                                            <input class="form-control balance_freight" name="balance_freight" readonly/>
                                             </div>
                                             <div class="col">
 
                                             <label class="col-form-label">Total Freight</label>
-                                            <input class="form-control total_freight" name="total_freight"/>
+                                            <input class="form-control total_freight" name="total_freight" readonly/>
                                             </div>
                                             <div class="col"></div>
                                         </div>
@@ -121,7 +122,7 @@
                                         <input type="hidden" class="deliveryOrder_weight" name="deliveryOrder_weight" />
                                         <input type="hidden" class="total_weight" name="total_weight" />
                                         <input type="hidden" class="destination" name="destination" />
-
+                                        <button type="button" class="btn btn-secondary invoice-prev-btn mr-2">Previous</button>
                                         <button class="btn btn-primary" type="submit">Submit</button>
                                     </div>
 
@@ -149,7 +150,7 @@
                     <div class="float-right">
                         <a href="{{route('vehicle.index')}}" class="btn btn-primary mr-2">Add DLV</a>
                         <a href="{{route('dlv.show')}}" class="btn btn-primary mr-2">Show DLV</a>
-                        <a href="{{route('daily-order.create')}}" class="btn btn-primary">Add Daily Order</a>
+                        <a href="{{route('daily-order.create')}}" class="btn btn-primary mr-2">Add Daily Order</a>
                         <button class="btn btn-primary create-invoice" data-toggle="modal" data-target=".invoice" >Create Invoice</button>
                     </div>
                 </div>
@@ -180,6 +181,7 @@
                                     <th>Date</th>
                                     <th>Company</th>
                                     <th>Dealer</th>
+                                    <th>Receiver</th>
                                      <th>Destination</th>
                                      <th>Item Type</th>
                                     <th>Brand</th>
@@ -192,6 +194,7 @@
                             </thead>
                             <tbody>
                                 @foreach($dailyOrders as $dailyOrder)
+                                @if(in_array("0",json_decode($dailyOrder->permission_id)) || in_array(auth()->user()->id, json_decode($dailyOrder->permission_id)))
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-control multi-order" order="{{$dailyOrder}}">
@@ -200,6 +203,7 @@
                                      <td>{{$dailyOrder->date}}</td>
                                     <td>{{$dailyOrder->company->name}}</td>
                                     <td class="text-nowrap">{{$dailyOrder->dealer->name}}</td>
+                                    <td>{{$dailyOrder->receiver->name}}</td>
                                     <td><ul  class="ml-3 text-nowrap">
                                         @foreach(json_decode($dailyOrder->destination ) as $key => $destination)
                                             <li> {{$destination}}</li>
@@ -236,6 +240,7 @@
                                         </form>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -257,20 +262,35 @@
 
 
 
-        $(function () {
-        $('.select-multiple').selectpicker(); 
+    $(function () {
+        $('.select-multiple').selectpicker({
+            liveSearch: true
+        }); 
     });
 
     $('.next-invoice-btn').on('click',function(){
         if(dailyOrderQuantity<deliveryOrderQuantity){
             alert(`Delivery order quantity (${deliveryOrderQuantity}) must be less than daily order quanity (${dailyOrderQuantity})`)
             return false
-
         }
-        var select = $('.select-multiple option:selected').attr('value')
-       console.log(select)
+        var vehicle_check = $('.select-multiple-vehicle option:selected').val()
+        var driver_check = $('.select-multiple-driver option:selected').val()
+        if(!vehicle_check) {
+            alert("Please Select a Vehicle")
+            return false
+        }
+
+        if(!driver_check) {
+            alert("Please select a Driver")
+            return false
+        }
+
         $('.invoice-first-page').hide();
         $('.invoice-second-page').show();
+    })
+    $('.invoice-prev-btn').on('click', function(){
+        $('.invoice-second-page').hide();  
+        $('.invoice-first-page').show();
     })
 
 
@@ -293,11 +313,7 @@
         $('.dailyOrder_weight').val(daily_order_weight)
         $('.total_weight').val(total_weight)
 
-        $('.total_quantity').val(deliveryOrderQuantity)
-        $('.deliveryOrder_ids').val(deliveryOrder_ids)
-         
-        console.log(deliveryOrderQuantity)
-        console.log(deliveryOrder_ids)
+        $('.deliveryOrder_ids').val(deliveryOrder_ids)         
     })
 
     $('.create-invoice').on('click',function(){
@@ -311,7 +327,6 @@
                 var order= JSON.parse($(this).attr('order'))
                 dailyOrder_ids.push(order.id)
                 
-                console.log(order)
                 var quantity = JSON.parse(order.quantity)
                 var destinations = JSON.parse(order.destination)
                     destination_all = [...destination_all,...destinations]
@@ -331,6 +346,7 @@
 
             $('.dailyOrder_ids').val(dailyOrder_ids)
             $('.destination').val(destination_all)
+            $('.total_quantity').val(dailyOrderQuantity)
             // $('.multi-dlv-ids').val(vehicle_ids)
         } else {
             alert("Please Select Daily Order")
@@ -338,7 +354,7 @@
         }
     })
 
-    $('.calculate').on('change',function(){
+    $('.calculate').on('keyup',function(){
         var arpt = Number($('input[name="arpt"]').val())
         var cpt =  Number($('input[name="cpt"]').val())
         var opt =  Number($('input[name="opt"]').val())

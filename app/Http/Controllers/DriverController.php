@@ -61,9 +61,8 @@ class DriverController extends Controller
        if($result){
            return redirect()->back()->with(['error'=>'Enter Valid Mobile Number']);
        }
-       if(strlen($request->cnic_no)){
+       if(strlen($request->cnic_no) != 15){
          return redirect()->back()->with(['error'=>'Please Enter Valid CNIC Number']);
-
        }
 
          if($request->hasFile('picture')){
@@ -95,7 +94,7 @@ class DriverController extends Controller
             'mobile'=>json_encode($mobile),
             'address'=>$request->address,
             'cnic_no'=>$request->cnic_no,
-            'company_id'=>' ',
+            'company_id'=>0,
             'picture'=>$pictureUrl,
             'cnic_front_pic'=>$frontUrl,
             'cnic_back_pic' =>$backUrl

@@ -48,7 +48,7 @@
                         @method('PUT')
                         <div class="form-group">
                             <label class="col-form-label"> Company</label>
-                            <select class="form-control company-select"  name="company_id"  required>
+                            <select class="form-control company-select select-search"  name="company_id"  required>
                                 <option value="">Please Select Type </option>
                                 @foreach($companies as $company)
                                 <option comp="{{$company->name}}" value="{{$company->id}}" @if($dailyOrder->company_id==$company->id)selected @endif>{{$company->name}}</option>
@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col">
                             <label class="col-form-label">Dealer</label>
-                            <select class="form-control dealer-select" name="dealer_id" required>
+                            <select class="form-control dealer-select select-search" name="dealer_id" required>
                                 <option value="">Please Select Dealer</option>
                                 @foreach($dealers as $dealer)
                                
@@ -73,7 +73,12 @@
                                 </div>
                                  <div class="col">
                                      <label class="col-form-label">Receiver</label>
-                                     <input type="text"  class="form-control"  value="{{$dailyOrder->receiver}}" name="receiver" required />
+                                     <select class="form-control select-search" name="receiver" required>
+                                    <option value="">Please Select Receiver</option>
+                                     @foreach($receivers as $receiver)
+                                     <option value="{{$dailyOrder->receiver_id}}" @if($dailyOrder->receiver_id==$receiver->id) selected @endif>{{$receiver->name}}</option>
+                                     @endforeach
+                                     </select>
                        
                                 </div>
                             </div>
@@ -133,7 +138,8 @@
                            <input type="text"  class="form-control noofbags" value="{{$dailyOrder->additional_charges}}" name="additional_charges" required />
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
+                            <div class="col">
                             <label class="col-form-label"> Status</label>
                             <select class="form-control" name="status" required>
                                 <option value="">Please Select Status </option>
@@ -142,6 +148,16 @@
                                  <option value="cancelled" @if($dailyOrder->status =="cancelled")selected @endif>Cancelled</option>
                             
                             </select>
+                            </div>
+                            <div class="col">
+                                <label class="col-form-label">Permission</label>
+                                <select class="form-control select-multiple" multiple name="permission[]" required>
+                                    <option value="0" @if(in_array('0',json_decode($dailyOrder->permission_id))) selected @endif>Everyone</option>
+                                    @foreach($users as $user)
+                                    <option value="{{$user->id}}"  @if(in_array($user->id,json_decode($dailyOrder->permission_id))) selected @endif>{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <button class="btn btn-primary">Submit</button>
@@ -184,7 +200,9 @@ $('.company-select').on('change',function(){
 
         
 $(function () {
-    $('.select-multiple').selectpicker();
+    $('.select-multiple').selectpicker({
+        liveSearch: true
+    });
     
 });
 
@@ -197,7 +215,9 @@ $('.destination').tagsinput({
 });
 
 $(function () {
-    $('.select-multiple').selectpicker();
+    $('.select-multiple').selectpicker({
+        liveSearch: true
+    });
     
 });
 

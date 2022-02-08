@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Zone</label>
-                                    <select class="form-control zone" name="zone" required>
+                                    <select class="form-control zone select-search" name="zone" required>
                                         <option value="">Please Select Zone</option>
                                     @foreach($destinations as $destination)
                                     <option value="{{$destination->zone}}">{{$destination->zone}}</option>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Area</label>
-                                    <select class="form-control area" name="area" required>
+                                    <select class="form-control area select-search" name="area" required>
                                         <option value="">Please Select Area</option>
                                     @foreach($destinations as $destination)
                                     <option value="{{$destination->area}}">{{$destination->area}}</option>
@@ -97,7 +97,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="col-form-label"> Company</label>
-                                        <select id="combo" class="form-control company_name" name="company_id" required>
+                                        <select id="combo" class="form-control company_name select-search" name="company_id" required>
                                             <option value="">Please Select Type </option>
                                             @foreach($companies as $company)
                                             <option comp="{{$company->name}}" value="{{$company->id}}">
@@ -245,13 +245,6 @@
         })
 
     })
-
-    $(document).ready(function() {
-        $('.zone').select2();
-    });
-    $(document).ready(function() {
-        $('.area').select2();
-    });
 
 
 

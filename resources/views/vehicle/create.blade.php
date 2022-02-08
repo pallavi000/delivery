@@ -111,7 +111,7 @@
                                     <div class="col">
                                         <label class="col-form-label">Type (Wheels) <i class="fa fa-toggle-on toggle-wheel-type" style="cursor: pointer;display:none" title="Change to Select"></i></label>
                                         <div class="wheel-type-div">
-                                        <select class="form-control wheel_type" name="type" required>
+                                        <select class="form-control wheel_type select-search" name="type" required>
                                             <option value="">Please Select Type </option>
                                             <option value="6-wheeler">6 Wheeler</option>
                                             <option value="8-wheeler">8 Wheeler</option>
@@ -128,7 +128,7 @@
                                     <div class="col">
                                         <label class="col-form-label">Body Type <i class="fa fa-toggle-on toggle-body-type" style="cursor: pointer;display:none" title="Change to Select"></i></label>
                                         <div class="body-type-div">
-                                        <select class="form-control body_type" name="body_type" required>
+                                        <select class="form-control body_type select-search" name="body_type" required>
                                             <option value="">Please Select Type </option>
                                             <option value="floor">Floor</option>
                                             <option value="box">Box</option>
@@ -268,7 +268,7 @@
     });
 
     $('.toggle-body-type').on('click', ()=>{
-        var ele = `<select class="form-control body_type" name="body_type" required>
+        var ele = `<select class="form-control body_type select-search" name="body_type" required>
                         <option value="">Please Select Type </option>
                         <option value="floor">Floor</option>
                         <option value="box">Box</option>
@@ -278,7 +278,7 @@
         $('.body-type-div').html(ele)
     })
     $('.toggle-wheel-type').on('click', ()=>{
-        var ele = `<select class="form-control wheel_type" name="type" required>
+        var ele = `<select class="form-control wheel_type select-search" name="type" required>
                         <option value="">Please Select Type </option>
                         <option value="6-wheeler">6 Wheeler</option>
                         <option value="8-wheeler">8 Wheeler</option>

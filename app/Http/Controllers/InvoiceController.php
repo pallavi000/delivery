@@ -53,7 +53,6 @@ class InvoiceController extends Controller
 
         $this->validate($request,[
             'dailyOrder_ids'=>'required',
-            'deliveryOrder_ids'=>'required',
             'dailyOrder_weight'=>'required',
             'deliveryOrder_weight'=>'required',
             'total_weight'=>'required',
@@ -72,25 +71,25 @@ class InvoiceController extends Controller
  
         $invoice = Invoice::create([
             'daily_order_id'=>json_encode($dailyOrder_ids),
-            'delivery_order_id'=>json_encode($deliveryOrder_ids),
+            'delivery_order_id'=> $request->deliveryOrder_ids ? json_encode($deliveryOrder_ids) : ' ',
             'daily_order_weight'=>$request->dailyOrder_weight,
             'delivery_order_weight'=>$request->deliveryOrder_weight,
             'total_weight'=>$request->total_weight,
-            'company_id'=>' ',
+            'company_id'=>0,
             'destination'=>json_encode($destinations),
             'vehicle_id'=>json_encode($request->vehicle_id),
             'driver_id'=>json_encode($request->driver_id),
-            'commission'=>$request->fixed_commission,
-            'erpt'=>$request->erpt,
-            'arpt'=>$request->arpt,
-            'cpt'=>$request->cpt,
-            'opt'=>$request->opt,
+            'commission'=>$request->fixed_commission ?? 0,
+            'erpt'=>$request->erpt ?? 0,
+            'arpt'=>$request->arpt ?? 0,
+            'cpt'=>$request->cpt ?? 0,
+            'opt'=>$request->opt ?? 0,
             'total_quantity'=>$request->total_quantity,
-            'fixed_commission'=>$request->fixed_commission,
-            'ofc'=>$request->ofc,
-            'advance_freight'=>$request->advance_freight,
-            'balance_freight'=>$request->balance_freight,
-            'total_freight'=>$request->total_freight
+            'fixed_commission'=>$request->fixed_commission ?? 0,
+            'ofc'=>$request->ofc ?? 0,
+            'advance_freight'=>$request->advance_freight ?? 0,
+            'balance_freight'=>$request->balance_freight ?? 0,
+            'total_freight'=>$request->total_freight ?? 0
         ]);
 
         foreach($deliveryOrder_ids as $delivery_id){

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 
 class ProductController extends Controller
 {
@@ -44,14 +47,26 @@ class ProductController extends Controller
             'brand' => 'required',
             'quantity' => 'required',
             'package_type' => 'required',
+            'units' => 'required',
+            'unit_type' => 'required',
         ]);
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $path = time() . '-' . Str::random(6) . '.' . $file->extension();
+            $request->file('image')->move(public_path('images'), $path);
+            $pictureUrl = '/images/'.$path;
+        }
 
         Product::create([
             'company_id' => $request->company_id,
             'item_type' => $request->item_type,
             'brand' => $request->brand,
-            'quantity' => $request->quantity,
-            'package_type' => $request->package_type,
+            'quantity' => json_encode($request->quantity),
+            'package_type' => json_encode($request->package_type),
+            'units' => json_encode($request->units),
+            'unit_type' => json_encode($request->unit_type),
+            'image' => $pictureUrl ?? ''
         ]);
         return redirect()->back()->with(['success'=>'Product Added Successfully']);
     }
@@ -94,13 +109,25 @@ class ProductController extends Controller
             'brand' => 'required',
             'quantity' => 'required',
             'package_type' => 'required',
+            'units' => 'required',
+            'unit_type' => 'required',
         ]);
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $path = time() . '-' . Str::random(6) . '.' . $file->extension();
+            $request->file('image')->move(public_path('images'), $path);
+            $pictureUrl = '/images/'.$path;
+            $product->image = $pictureUrl;
+        }
 
         $product->company_id= $request->company_id;
         $product->item_type= $request->item_type;
         $product->brand= $request->brand;
-        $product->quantity= $request->quantity;
-        $product->package_type= $request->package_type;
+        $product->quantity= json_encode($request->quantity);
+        $product->package_type= json_encode($request->package_type);
+        $product->units = json_encode($request->units);
+        $product->unit_type = json_encode($request->unit_type);
         $product->save();
         return redirect()->back()->with(['success'=>'Product Updated Successfully']);
     }
@@ -114,6 +141,9 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if($product) {
+            if(file_exists(public_path($product->image))){
+                File::delete(public_path($product->image));
+            } 
             $product->delete();
             return redirect()->back()->with(['success'=>'Product Deleted Successfully']);
         }

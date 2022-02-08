@@ -1,8 +1,6 @@
 @extends('layouts.sidebar')
 @section('content')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.9/jquery.datetimepicker.css">
 <script type="text/javascript"
@@ -49,7 +47,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label"> Company</label>
-                                    <select class="form-control company-select" name="company_id" required>
+                                    <select class="form-control company-select select-search" name="company_id" required>
                                         <option value="">Please Select Type </option>
                                         @foreach($companies as $company)
                                         <option comp="{{$company->name}}" value="{{$company->id}}" @if($deliveryOrder->
@@ -73,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Dealer</label>
-                            <select class="form-control dealer-select" name="dealer_id" required>
+                            <select class="form-control dealer-select select-search" name="dealer_id" required>
                                 <option value="">Please Select Dealer</option>
                                 @foreach($dealers as $dealer)
 
@@ -86,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-form-label"> Item Type</label>
-                            <select class="form-control" name="item_type" required>
+                            <select class="form-control select-search" name="item_type" required>
                                 <option value="">Please Select Type </option>
                                 <option value="opc" @if($deliveryOrder->item_type=="opc") selected @endif>OPC</option>
                                 <option value="src" @if($deliveryOrder->item_type=="src") selected @endif>SRC</option>
@@ -99,33 +97,28 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="col-form-label"> Brand</label>
-                                    <select class="form-control" name="brand" required>
+                                    <select class="form-control select-search" name="brand" required>
                                         <option value="">Please Select Brand </option>
-                                        <option class="power-brand" value="Power Cement" @if($deliveryOrder->
-                                            brand=="Power
+                                        <option class="power-brand" value="Power Cement" @if($deliveryOrder->brand=="Power
                                             Cement") selected @endif>Power Cement</option>
-                                        <option class="power-brand" value="Black Bull" @if($deliveryOrder->brand=="Black
-                                            Bull")
+                                        <option class="power-brand" value="Black Bull" @if($deliveryOrder->brand=="Black Bull")
                                             selected @endif>Black Bull</option>
                                         <option class="power-brand" value="Qila" @if($deliveryOrder->brand=="Qila")
                                             selected
                                             @endif>Qila</option>
 
-                                        <option class="lucky-brand" value="Lucky OPC" @if($deliveryOrder->brand=="Lucky
-                                            OPC")
+                                        <option class="lucky-brand" value="Lucky OPC" @if($deliveryOrder->brand=="Lucky OPC")
                                             selected @endif>Lucky OPC</option>
-                                        <option class="lucky-brand" value="Lucky SRC" @if($deliveryOrder->brand=="Lucky
-                                            SRC")
+                                        <option class="lucky-brand" value="Lucky SRC" @if($deliveryOrder->brand=="Lucky SRC")
                                             selected @endif>Lucky SRC</option>
-                                        <option class="lucky-brand" value="Lucky Raj" @if($deliveryOrder->brand=="Lucky
-                                            Raj")
+                                        <option class="lucky-brand" value="Lucky Raj" @if($deliveryOrder->brand=="Lucky Raj")
                                             selected @endif>Lucky Raj</option>
 
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Quantity</label>
-                                    <select class="form-control quantity-select" name="quantity" required>
+                                    <select class="form-control quantity-select select-search" name="quantity" required>
                                         <option value="">Please Select Quantity </option>
                                         <option value="1" @if($deliveryOrder->quantity=="1") selected @endif>1</option>
                                         <option value="2" @if($deliveryOrder->quantity=="2") selected @endif>2</option>
@@ -166,7 +159,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="col-form-label">Packing Type</label>
-                                    <select class="form-control" name="packing_type" required>
+                                    <select class="form-control select-search" name="packing_type" required>
                                         <option value="">Please Select Packing Type </option>
                                         <option value="paper_bags" @if($deliveryOrder->packing_type=="paper_bags")
                                             selected
